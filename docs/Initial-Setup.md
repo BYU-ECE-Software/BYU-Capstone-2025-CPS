@@ -20,7 +20,17 @@ To run the testbed, you require the following components:
 
 ## Software Setup
 
-### 1. Clone the Repository
+### Step 1: Clone the Repository
 ```bash
 sudo git clone [https://github.com/trevormcclellan/CAN-TestBed](https://github.com/trevormcclellan/CAN-TestBed)
 sudo mkdir TestBED
+```
+### Step 2: Install the Arduino IDE and Libraries
+
+**Recommended: Automatic Setup (Arduino CLI)**
+
+For most users, the easiest way to install dependencies is to use the provided setup script. The install_deps.sh is located in the rp2040 directory. This script will install arduino-cli to the user's home directory if it is not found, then install all required libraries, including the custom CANBed RP2040 library from Longan Labs. If you have the Arduino IDE installed, this script should add all of the dependencies there as well, if you would like to use it later. Run the script using the following command:
+
+```bash
+./rp2040/install_deps.sh
+```
