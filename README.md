@@ -8,6 +8,7 @@ This tool allows students and researchers to replay authentic CAN traffic logs (
 
 | Page | Description |
 | :--- | :--- |
+| [Background](docs/Background.md) | Introduction to CAN Bus, its various components, vulnerabilities. |
 | [Initial Setup](docs/Initial-Setup.md) | Step-by-step guide for setting up the hardware (RP2040, CANable) and installing the required software (Python Backend, Node.js Frontend). |
 | [Using the TestBed](docs/Using-the-TestBed.md) | Instructions on connecting devices to the web dashboard, identifying boards, loading `candump` logs, and running normal traffic simulations. |
 | [Attack Simulation](docs/Attack-Simulation.md) | Detailed procedures for executing real-time attacks using the injection panel, specifically covering Denial of Service (DoS) and ID Spoofing. |
