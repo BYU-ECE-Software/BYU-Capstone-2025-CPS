@@ -35,7 +35,7 @@ The CANBed Development boards come with several components that can be soldered 
 1. Slide the screw terminal into the 4 holes on the edge of the board as shown.
 2. Solder all 4 pins to the board. Do this for all 9 boards.
 > Note: These will be used to connect all the boards to the CAN bus.
-[Attaching 4-pin to CAN](4-pin_CAN)
+![Attaching 4-pin to CAN](docs/4-pin_CAN.png)
 
 
 ## Software Setup
