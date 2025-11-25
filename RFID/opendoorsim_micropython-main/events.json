@@ -1,0 +1,20 @@
+[
+  {
+    "FC": 99,
+    "CN": 4944,
+    "action": "door_open",
+    "params": {
+      "duration": 5
+    }
+  },
+  {
+    "FC": 99,
+    "CN": 4945,
+    "action": "light_on",
+    "params": {
+      "light_id": 1,
+      "duration": 10
+    }
+  }
+]
+
