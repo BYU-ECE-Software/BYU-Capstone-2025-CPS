@@ -27,18 +27,18 @@ To run the testbed, you require the following components:
 
 ## Assembling the Components
 
-### Board Preparation
+### Board Preparation:
 
 The CANBed Development boards come with several components that can be soldered on, including a D-Sub Connector, a 4-pin screw terminal, headers for the GPIO and SPI pins, connectors for the I2C and UART pins, and a switch for the 120Ω terminal resistor. The only component that is required for all 9 boards is the 4-pin screw terminal. At least one of the boards will need the switch for the 120Ω terminal resistor (this will be the last board in the loop). If you would like to use the GPIO pins to connect to external sensors or components, you may want to attach the GPIO headers.
 
-### Attaching the 4-pin Screw Terminal
+### Attaching the 4-pin Screw Terminal:
 1. Slide the screw terminal into the 4 holes on the edge of the board as shown.
 2. Solder all 4 pins to the board. Do this for all 9 boards.
 > Note: These will be used to connect all the boards to the CAN bus.
 
 ![Attaching 4-pin to CAN](4-pin_CAN.png)
 
-### Attaching the 120Ω Terminal Resistor Switch
+### Attaching the 120Ω Terminal Resistor Switch:
 
 > You only need to do this on one board.
 
@@ -50,7 +50,7 @@ The CANBed Development boards come with several components that can be soldered 
 
 ![Resistor Switch](Resistor_Switch.png)
 
-### Connecting the Boards
+### Connecting the Boards:
 
 1. Open the screw terminals marked CANH and CANL on each board. These are the CAN High and CAN Low connections.
 2. Connect all 9 boards in a chain, ensuring that the board with the switch is the last in the chain.
@@ -63,6 +63,19 @@ The CANBed Development boards come with several components that can be soldered 
 6. Connect the USB Hub's USB cable to your computer
 
 ![Boards](9-boards.png)
+
+### Connecting the CANable Adapter:
+
+1. Open the screw terminals marked CANH and CANL on the CANable adapter and the first board in the chain.
+2. Connect the CANable CANH and CANL terminals to the board's CANH and CANL terminals.
+3. Make sure the connection is tight.
+4. Plug the CANable adapter into the USB hub
+5. Push the "R120" switch down to enable the 120Ω resistor
+> Note: It might be more convenient to use a USB extension cable to connect the CANable adapter to the USB hub
+
+**The Complete setup should look like this:**
+
+![diagram](system_diagram.png)
 
 ## Software Setup
 
