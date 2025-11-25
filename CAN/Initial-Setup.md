@@ -1,4 +1,4 @@
-# Initial Setup
+# Initial Setup 
 
 This guide covers the necessary steps to prepare the CAN-TestBed environment. You will first configure the physical connections for the microcontrollers, followed by installing the required backend (Python) and frontend (Node.js) software.
 
@@ -10,13 +10,33 @@ This guide covers the necessary steps to prepare the CAN-TestBed environment. Yo
 
 ## Hardware Setup
 To run the testbed, you require the following components:
-* **Microcontrollers:** RP2040 boards (e.g., PicoArduino) to act as ECUs.
-* **Adapter:** A CANable USB adapter for the main bus interface.
+* (1x) CANable adapter.
+* (9x) Longan Labs RP2040 Development Boards
+* (9x) Micro USB Cables 
+* (1x) 10 Port Powered USB Hub 
+* CAN Bus Wire 
 
-**Steps:**
-1.  Connect the RP2040 boards to your computer via USB.
-2.  Connect the CANable adapter to the same computer via USB.
-3.  Ensure all devices are powered on.
+> Note:
+> Things to Consider when selecting these products above:
+> 1. USB Cables: Use Micro USB cables that support both data transfer and power; "charging-only" cables are not suitable for serial communication.
+> 2. USB Hub: Utilize a powered USB hub with an external power supply to reliably power all 10 boards simultaneously.
+> 3. CAN Wiring: Use twisted pair wiring for CAN High and CAN Low (dedicated wire is best, but twisted pair from a CAT6 Ethernet cable works).
+> 4. CANable Hardware: The open-source CANable board can be purchased from various sources; the exact model used here is not required.
+> 5. Firmware: This project requires and utilizes the candleLight firmware, not the slcan option.
+
+
+## Assembling the Components
+
+### Board Preparation
+
+The CANBed Development boards come with several components that can be soldered on, including a D-Sub Connector, a 4-pin screw terminal, headers for the GPIO and SPI pins, connectors for the I2C and UART pins, and a switch for the 120Ω terminal resistor. The only component that is required for all 9 boards is the 4-pin screw terminal. At least one of the boards will need the switch for the 120Ω terminal resistor (this will be the last board in the loop). If you would like to use the GPIO pins to connect to external sensors or components, you may want to attach the GPIO headers.
+
+### Attaching the 4-pin Screw Terminal
+1. Slide the screw terminal into the 4 holes on the edge of the board as shown.
+2. Solder all 4 pins to the board. Do this for all 9 boards.
+> Note: These will be used to connect all the boards to the CAN bus.
+[Attaching 4-pin to CAN](4-pin_CAN)
+
 
 ## Software Setup
 
