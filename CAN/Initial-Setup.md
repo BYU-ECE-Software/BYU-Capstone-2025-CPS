@@ -35,8 +35,20 @@ The CANBed Development boards come with several components that can be soldered 
 1. Slide the screw terminal into the 4 holes on the edge of the board as shown.
 2. Solder all 4 pins to the board. Do this for all 9 boards.
 > Note: These will be used to connect all the boards to the CAN bus.
-![Attaching 4-pin to CAN](docs/4-pin_CAN.png)
 
+![Attaching 4-pin to CAN](4-pin_CAN.png)
+
+### Attaching the 120Ω Terminal Resistor Switch
+
+> You only need to do this on one board.
+
+1. Slide the switch into the 6 holes in the corner of the board as shown.
+2. Solder all 6 pins to the board.
+3. Slide the switch toward the edge of the board to enable the 120Ω terminal resistor.
+
+> Note: CAN bus uses a 120Ω terminal resistor at each end to ensure signal integrity and proper operation of the network.
+
+![Resistor Switch](Resistor_Switch)
 
 ## Software Setup
 
