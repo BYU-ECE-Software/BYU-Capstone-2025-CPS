@@ -48,7 +48,21 @@ The CANBed Development boards come with several components that can be soldered 
 
 > Note: CAN bus uses a 120Ω terminal resistor at each end to ensure signal integrity and proper operation of the network.
 
-![Resistor Switch](Resistor_Switch)
+![Resistor Switch](Resistor_Switch.png)
+
+### Connecting the Boards
+
+1. Open the screw terminals marked CANH and CANL on each board. These are the CAN High and CAN Low connections.
+2. Connect all 9 boards in a chain, ensuring that the board with the switch is the last in the chain.
+
+>Note: It is best to use two different colors of wire for the CAN High and CAN Low connections to ensure that they are not mixed up. The standard is to use yellow for CAN High and green for CAN Low.
+
+3. Make sure all connections are tight.
+4. Connect a Micro USB cable from each board to the USB hub
+5. Plug in the USB Hub's power adapter
+6. Connect the USB Hub's USB cable to your computer
+
+![Boards](9_boards.png)
 
 ## Software Setup
 
