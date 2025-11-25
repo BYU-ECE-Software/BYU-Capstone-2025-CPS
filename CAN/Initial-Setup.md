@@ -62,7 +62,7 @@ The CANBed Development boards come with several components that can be soldered 
 5. Plug in the USB Hub's power adapter
 6. Connect the USB Hub's USB cable to your computer
 
-![Boards](9_boards.png)
+![Boards](9-boards.png)
 
 ## Software Setup
 
