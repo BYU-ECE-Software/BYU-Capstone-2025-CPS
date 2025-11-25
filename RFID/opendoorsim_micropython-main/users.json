@@ -1,0 +1,31 @@
+[
+  {
+    "FC": 123,
+    "CN": 45678,
+    "Name": "John Doe",
+    "Flag": "",
+    "active": true
+  },
+  {
+    "FC": 99,
+    "CN": 4944,
+    "Name": "Admin User",
+    "Flag": "CTF{admin_access}",
+    "active": true
+  },
+  {
+    "FC": 50,
+    "CN": 12345,
+    "Name": "Disabled User",
+    "Flag": "",
+    "active": false
+  },
+  {
+    "FC": 99,
+    "CN": 4945,
+    "Name": "Maintenance Staff",
+    "Flag": "",
+    "active": true
+  }
+]
+

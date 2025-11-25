@@ -1,0 +1,20 @@
+{
+  "MODE": "doorsim",
+  "MRACS_ENABLED": false,
+  "D0_PIN": 21,
+  "D1_PIN": 22,
+  "MAX_BITS": 96,
+  "CARD_READ_TIMEOUT_MS": 200,
+  "SCL_PIN": 18,
+  "SDA_PIN": 19,
+  "SCREEN_WIDTH": 128,
+  "SCREEN_HEIGHT": 32,
+  "OLED_FLIPPED": false,
+  "MQTT_BROKER": "192.168.1.100",
+  "MQTT_PORT": 1883,
+  "MQTT_CLIENT_ID": "",
+  "MQTT_USERNAME": "",
+  "MQTT_PASSWORD": "",
+  "MQTT_TOPIC_PREFIX": "opendoorsim"
+}
+
