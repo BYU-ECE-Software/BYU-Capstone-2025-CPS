@@ -79,17 +79,104 @@ The CANBed Development boards come with several components that can be soldered 
 
 ## Software Setup
 
-### Step 1: Clone the Repository
-```bash
-sudo git clone [https://github.com/trevormcclellan/CAN-TestBed](https://github.com/trevormcclellan/CAN-TestBed)
+### 1. Update Your System
+Make sure your software is up-to-date by running:
+
+```
+sudo apt update -y && sudo apt upgrade -y
 sudo mkdir TestBED
 ```
-### Step 2: Install the Arduino IDE and Libraries
 
-**Recommended: Automatic Setup (Arduino CLI)**
+### 2. Getting the Repository
+Clone the CAN TestBed repository:
 
-For most users, the easiest way to install dependencies is to use the provided setup script. The install_deps.sh is located in the rp2040 directory. This script will install arduino-cli to the user's home directory if it is not found, then install all required libraries, including the custom CANBed RP2040 library from Longan Labs. If you have the Arduino IDE installed, this script should add all of the dependencies there as well, if you would like to use it later. Run the script using the following command:
-
-```bash
-./rp2040/install_deps.sh
 ```
+sudo git clone https://github.com/trevormcclellan/CAN-TestBed
+```
+
+### 3. Preparing Installation
+Check if Python 3 is installed:
+
+```
+python3 -v
+```
+
+#### 3.1 Navigate to the Backend directory:
+
+Install Pip (if not installed):
+
+```
+sudo apt install python3-pip -y
+```
+
+#### 3.2 Install Python dependencies:
+
+```
+sudo pip install -r requirements.txt
+```
+
+> If you get an error, bypass the safety warning::
+
+```
+sudo pip install -r requirements.txt --break-system-packages
+```
+
+
+### Side Note — Flask Module Issues
+If you get an error saying flask modules are missing, uninstall Flask:
+
+```
+sudo pip uninstall flask
+```
+
+or
+
+```
+pip uninstall flask
+``` 
+Then install the required modules manually:
+
+```
+pip install Flask --break-system-packages
+pip install Flask_cors --break-system-packages
+pip install Flask_socketio --break-system-packages
+pip install can --break-system-packages
+```
+### 4. Run the Backend
+Start the backend with:
+```
+python3 backend.py
+```
+
+### 5. Preparing the Web Dashboard (Frontend)
+
+#### 5.1 Install npm
+Navigate to the CAN-Frontend directory:
+
+```
+cd ../CAN-Frontend
+```
+
+Install npm:
+
+```
+sudo apt install npm
+```
+
+Install frontend packages:
+
+```
+sudo npm install
+sudo npm audit fix
+
+```
+Run the frontend:
+
+```
+sudo npm run dev
+
+```
+
+> Note About VITE Issues:
+If you encounter Vite-related errors, install newer versions of Python and Node.js.
+
