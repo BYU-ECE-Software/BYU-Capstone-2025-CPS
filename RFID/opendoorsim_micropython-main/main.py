@@ -8,7 +8,7 @@ import ssd1306 # Import OLED driver
 import formats # Import Wiegand formats
 import webserver # Import web server
 
-# Test comment
+# Test comment 1
 
 # --- Global Wiegand Variables ---
 wiegand_bit_array = None
