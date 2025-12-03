@@ -1,4 +1,4 @@
-# CAN-RFID
+# RFID
 
 <---Background info Needed---->
 
@@ -11,3 +11,4 @@
 | [Using the TestBed](Using-the-RFID.md) |  |
 | [Attack Simulation](Attack-Simulation.md) |  |
 | [Student Labs](Student-Labs.md) |  |
+
