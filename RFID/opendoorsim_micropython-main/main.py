@@ -1,4 +1,7 @@
+import time
+
 from machine import Pin, I2C
+from lcd_i2c import LCD_I2C #We might have to change where the pins are
 import machine
 import utime
 import micropython
@@ -26,6 +29,15 @@ events = None
 
 # --- Configuration Loading Functions ---
 
+# Initialize I2C
+# Default ESP32 pins: SDA=GPIO21, SCL=GPIO22
+i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=100000)
+
+# Initialize LCD
+# Common addresses are 0x27 or 0x3F
+# Change if your LCD has a different address
+lcd = LCD_I2C(i2c, addr=0x27, cols=16, rows=2)
+
 def load_config():
     """Loads configuration from config.json file."""
     try:
@@ -33,6 +45,9 @@ def load_config():
             return json.load(f)
     except Exception as e:
         print(f"Error loading config.json: {e}")
+        lcd.print(f"Error loading config.json: {e}")
+        time.sleep(5)
+        lcd.clear()
         # Return default config if file can't be loaded
         return {
             "D0_PIN": 21,
@@ -53,6 +68,9 @@ def load_users():
             return json.load(f)
     except Exception as e:
         print(f"Error loading users.json: {e}")
+        lcd.print(f"Error loading users.json: {e}")
+        time.sleep(5)
+        lcd.clear()
         return []
 
 def load_events():
@@ -62,6 +80,9 @@ def load_events():
             return json.load(f)
     except Exception as e:
         print(f"Error loading events.json: {e}")
+        lcd.print(f"Error loading events.json: {e}")
+        time.sleep(5)
+        lcd.clear()
         return []
 
 # --- Wiegand Bit Array Helpers ---
@@ -118,17 +139,17 @@ def d1_pulse_handler(pin_obj):
 
 # --- OLED Helper Functions ---
 # (No changes needed)
-def oled_print(line1, line2="", line3="", line4=""):
-    """Helper to clear and write text to the OLED."""
-    global display, config
-    if display:
-        display.fill(0) # Clear the screen
-        display.text(line1, 0, 0)
-        display.text(line2, 0, 8) # 8 pixels per line
-        if config['SCREEN_HEIGHT'] > 32: 
-            display.text(line3, 0, 16)
-            display.text(line4, 0, 24)
-        display.show()
+# def oled_print(line1, line2="", line3="", line4=""):
+#     """Helper to clear and write text to the OLED."""
+#     global display, config
+#     if display:
+#         display.fill(0) # Clear the screen
+#         display.text(line1, 0, 0)
+#         display.text(line2, 0, 8) # 8 pixels per line
+#         if config['SCREEN_HEIGHT'] > 32:
+#             display.text(line3, 0, 16)
+#             display.text(line4, 0, 24)
+#         display.show()
 
 # --- Peripheral Control Functions (Placeholders) ---
 # (No changes needed)
@@ -474,7 +495,7 @@ def handle_raw_mode(result, data_buffer):
     oled_line_2 = f"CN: {result['cn']}"
     oled_line_3 = result['raw_hex']
     oled_line_4 = f"Parity: {'PASS' if result['parity_ok'] else 'FAIL'}"
-    oled_print(oled_line_1, oled_line_2, oled_line_3, oled_line_4)
+    lcd.print(oled_line_1, oled_line_2, oled_line_3, oled_line_4)
 
 # --- Access Control Functions ---
 # (No changes needed)
