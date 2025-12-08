@@ -6,6 +6,7 @@ This guide covers the necessary steps to prepare the CAN-TestBed environment. Yo
 * [Hardware Setup](#hardware-setup)
 * [Software Setup](#software-setup)
   * [CAN Testbed Startup Automation](#can-testbed-startup-automation)
+* [Troubleshooting](Troubleshooting)
 
 ---
 
