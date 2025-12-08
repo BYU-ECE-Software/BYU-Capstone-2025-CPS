@@ -181,7 +181,7 @@ sudo npm run dev
 > Note About VITE Issues:
 If you encounter Vite-related errors, install newer versions of Python and Node.js.
 
-## ⚙️ CAN Testbed Startup Automation
+## CAN Testbed Startup Automation
 
 > ⚠️ IMPORTANT NOTE: Raspberry Pi 5 Specific Configuration
 This documentation and the subsequent configuration review are based on the specific hardware and operating environment currently deployed on the Raspberry Pi 5 machine. The file paths and user environment settings (like $HOME/.config/autostart) are tailored for this particular setup and may require modification for other Linux distributions or Raspberry Pi models.
