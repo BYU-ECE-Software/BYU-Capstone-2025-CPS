@@ -180,3 +180,171 @@ sudo npm run dev
 > Note About VITE Issues:
 If you encounter Vite-related errors, install newer versions of Python and Node.js.
 
+## ⚙️ CAN Testbed Startup Automation
+
+> ⚠️ IMPORTANT NOTE: Raspberry Pi 5 Specific Configuration
+This documentation and the subsequent configuration review are based on the specific hardware and operating environment currently deployed on the Raspberry Pi 5 machine. The file paths and user environment settings (like $HOME/.config/autostart) are tailored for this particular setup and may require modification for other Linux distributions or Raspberry Pi models.
+
+
+The provided configuration successfully automates three key components upon system boot and user login:
+
+### 1. Chrome Kiosk Auto-Launch (GUI Autostart)
+The following file is located at:
+
+```
+~/.config/autostart/can-frontend.desktop
+
+```
+
+can-frontend.desktop
+
+```
+[Desktop Entry]
+Type=Application
+Name=CAN Frontend Auto Browser
+Exec=/usr/bin/chromium --kiosk --start-fullscreen --noerrdialogs --disable-infobars --disable-session-crashed-bubble http://localhost:5173
+X-GNOME-Autostart-enabled=true
+Terminal=false
+
+```
+**Explanation**
+| Key                                   | Meaning                                                                                   |
+|---------------------------------------|-------------------------------------------------------------------------------------------|
+| `[Desktop Entry]`                     | Tells GNOME this is a standard application launcher.                                      |
+| `Type=Application`                    | Indicates this will launch a normal application at login.                                 |
+| `Name=CAN Frontend Auto Browser`      | The name that appears in GNOME Startup Applications.                                      |
+| `Exec=…`                              | The command executed at login.                                                             |
+| `--kiosk`                             | Launches Chromium in full locked-down kiosk mode.                                          |
+| `--start-fullscreen`                  | Forces fullscreen even if kiosk mode is bypassed.                                          |
+| `--noerrdialogs`                      | Prevents Chromium error popup windows.                                                     |
+| `--disable-infobars`                  | Removes automation banners (“Controlled by automated software”).                          |
+| `--disable-session-crashed-bubble`    | Suppresses “Restore pages?” message.                                                       |
+| `http://localhost:5173`               | The frontend served locally by the dev server.                                             |
+| `X-GNOME-Autostart-enabled=true`      | Automatically runs on login.                                                               |
+| `Terminal=false`                      | Runs without opening a terminal window.                                                    |
+
+This ensures the Raspberry Pi immediately opens the CAN-Frontend UI in a locked kiosk mode upon boot.
+
+### 2. Frontend Automation (Systemd Service)
+Systemd service file located at:
+
+```
+/etc/systemd/system/can-frontend.service
+
+```
+
+can-frontend.service
+
+```
+[Unit]
+Description=CAN Testbed Frontend
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/can-bus/CAN-Testbed/CAN-Frontend
+ExecStart=/usr/bin/env npm run dev
+Restart=on-failure
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+**Explanation**
+
+| Section                  | Details                                                                      |
+|--------------------------|-------------------------------------------------------------------------------|
+| `After=network-online.target`   | Ensures the service starts only after the network is fully online.            |
+| `Wants=network-online.target`   | Makes systemd attempt to start networking if it is not already active.       |
+| `WorkingDirectory=…`            | Points to the location of the CAN Frontend project.                           |
+| `ExecStart=…`                   | Runs `npm run dev` to start the Vite/Web server.                               |
+| `Restart=on-failure`            | Auto-restarts the service if the process exits with an error.                 |
+| `RestartSec=5`                  | Waits 5 seconds before attempting to restart.                                 |
+| `User=root`                     | Runs the service as root (can be changed to `can-bus` for hardening).         |
+| `WantedBy=multi-user.target`    | Enables the service to start automatically during normal multi-user boot.     |
+
+
+### 3. Backend Automation (Systemd Service)
+Systemd service file located at:
+
+```
+/etc/systemd/system/can-backend.service
+
+```
+
+can-backend.service
+
+```
+[Unit]
+Description=CAN Testbed Backend
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/can-bus/CAN-Testbed/Backend
+ExecStart=/usr/bin/python3 backend.py
+Restart=on-failure
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
+```
+**Explanation**
+
+| Key                           | Meaning                                                                                   |
+|-------------------------------|-------------------------------------------------------------------------------------------|
+| `After=network-online.target` | Backend starts only after the network is confirmed online.                                |
+| `WorkingDirectory`            | Points to the backend Python folder.                                                      |
+| `ExecStart`                   | Runs `backend.py` using the system Python3 interpreter.                                   |
+| `Restart` & `RestartSec`      | Ensures the service automatically restarts after a failure.                               |
+| `User=root`                   | Runs with elevated privileges (CAN interfaces or hardware access may require root).       |
+| `WantedBy=multi-user.target`  | Enables automatic startup during the normal multi-user boot process.                      |
+
+### 4. Operational Notes
+**Open a terminal**
+
+`Ctrl + Alt + T`
+
+**Exit Kiosk Mode (Chromium)**
+1. Switch to TTY1
+   `Ctrl + Alt + F1 `
+
+2. Login:
+   `Username: can-bus` `Password: Cargovr00m`
+
+3. Kill Chromium:
+   `killall chromium`
+
+4. Return to GUI: `Ctrl + Alt + F7`
+
+### 5. Check Service Status
+**Frontend**
+```
+sudo systemctl status can-frontend.service
+```
+
+**Backend**
+```
+sudo systemctl status can-backend.service
+```
+
+### 6. Enable Services on Boot (if not already enabled)
+
+```
+sudo systemctl enable can-frontend.service
+sudo systemctl enable can-backend.service
+```
+
+### 7. Start / Restart Manually
+
+```
+sudo systemctl restart can-frontend.service
+sudo systemctl restart can-backend.service
+
+```
