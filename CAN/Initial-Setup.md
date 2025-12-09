@@ -356,34 +356,6 @@ sudo systemctl restart can-backend.service
 ### Issue: Raspberry Pi 5 HDMI Output Fails After Boot
 Symptom:
 
-- Boot screen appears
-
-- Once OS loads, display goes black
-
-- Display returns only after switching HDMI ports
-
-This happened because the Raspberry Pi attempted to auto-detect EDID and disabled HDMI when the monitor was slow to respond.
-
-**Fix: Force HDMI Port 1 Always On**
-Edit the file: `/boot/firmware/cmdline.txt`
-
-/boot/firmware/cmdline.txt
-```
-video=HDMI-A-1:e
-
-```
-
-What this does
-
-- Forces HDMI port 1 to stay enabled even without EDID
-
-- Prevents the Pi from disabling HDMI during cold boot
-
-- Stops the issue where video is lost after the OS loads
-
-- Eliminates the need to physically switch HDMI cables
-
-This has been confirmed to resolve the display dropout problem on Raspberry Pi 5.
 
 ### Issue: On kiosk display, scrollbars appeared due to screen resolution mismatch.
 
