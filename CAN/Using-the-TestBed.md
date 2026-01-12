@@ -1,8 +1,8 @@
 # Using the Test Bed
 
-These instructions will guid you through the basic setup and operation of the CAN Simulator.
+These instructions will guide you through the basic setup and operation of the CAN Simulator.
 
->Note: These instructions assume that the CAN Simulator is fully put together and running out of it's portable case.  <br><br>
+>Note: These instructions assume that the CAN Simulator is fully put together and running out of its portable case.  <br><br>
 If you are trying to build it from scratch or something is not working properly, ensure that the initial hardware and software setup instructions have been followed. You can find them in [Initial-Setup.md](BYU-Capstone-2025-CPS\CAN\Initial-Setup.md)
 
 
