@@ -27,7 +27,7 @@ Once powered, give the Pi a few minutes to boot up. The web app for the CAN Bus 
 Make sure that all the boards (except the attacker board) are powered on. 
 ***Make sure to label DOS attacker board***
 
-If all the boards are powered on, and the web app is started, you should see them on the homepage. Skip to [Uploading a CANdump](#uploading-a-candump-and-setting-id-filtering).
+If all the boards are powered on, and the web app is started, you should see them on the homepage. Skip to [Uploading a CANdump](#uploading-a-candump).
 
 If they don't show up, you'll need to connect the boards to the web app. To do this:
 
@@ -41,7 +41,7 @@ If they don't show up, you'll need to connect the boards to the web app. To do t
 
 6. Repeat steps 3-5 to connect and add the remaining boards, **one at a time**. You do not have to disconnect or power off boards once added. Previously added ports will show up as "Paired". When adding the next board, select the port that does not say "Paired". Give each board a unique name.
 
-## Uploading a CANdump and Setting ID Filtering
+## Uploading a CANdump
 
 If you haven't already, return to the homepage.
 
@@ -49,10 +49,28 @@ You should see a serial console for each connected and powered-on board. If you 
 
 Now upload a CANdump log file by clicking "Choose File". You should see your selected file's name next to the button upon a successful upload.
 
-***maybe split this section in two***
+## Setting ID Filtering
+
+Once you have successfully uploaded a log file, you can set ID filtering on each board's serial console. To do this, click the drop down menu on a board's serial console and select an ID. The list should contain only IDs that are found within your uploaded log. 
+
+Some things to keep in mind:
+ 
+* Each board supports filtering up to 6 different IDs at once.
+* If you don't specify any ID for a board, that board will recieve *all* CAN messages.
+
+
+After you make any changes to the ID filtering, press "Upload IDs to ECUs". **Don't forget to upload the IDs or your simulation will not show results.**
+
 
 ## Running a Simulation
 
-how to upload file and run it. Explain output.
+After you've uploaded a log and set ID filters, you are good to run the simulation! You do that by clicking "Start Simulation". There isn't much of a visual indicator that a simulation is running, especially if the physical dashboard is not connected to the simulator. When a simulation is running, the "Start Simulation" button will instead read "Restart Simulation".
+
+After the simulation has completed, each of the active board's serial consoles will update with a list of the messages they recieved. 
+* These messages will have a checkmark icon if they were recieved as expected (✔️). 
+* If an expected message was *not* recieved, then there will be no icon. 
+* If an unexpected message is recieved (like if you injected an attack) then an exclamation icon will appear next to the unexpected messages (❗).
+
+You've now learned the basic operation of the CAN Simulator! Next, you can learn to perform [CAN bus attacks](Attack-Simulation.md), or follow along with the [student lab](Student-Labs.md).
 
 ## Additional Troubleshooting Notes
