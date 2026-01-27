@@ -4,7 +4,7 @@ The CAN Simulator is a hands-on tool designed to teach car network security. It 
 
 This tool allows students and researchers to replay real-life CAN traffic logs (`candumps`), configure ID filtering, and perform security assessments by simulating attacks like ID spoofing and Denial of Service (DoS) in a safe, controlled environment.
 
-We'd also like to give a big shoutout to **Trevor McClellan**, who pioneered this particular Can-TestBed that we have based our prototype on. Because of this, some of our documentation here is similar to, or quotes from, his [GitHub repo for his CAN-TestBed project](https://github.com/trevormcclellan/CAN-Testbed/wiki).
+One major contributor to this project is **Trevor McClellan**, who pioneered this particular Can-TestBed that the prototype was based on. Because of this, some of the documentation here is similar to, or quotes from, his [GitHub repo for his CAN-TestBed project](https://github.com/trevormcclellan/CAN-Testbed/wiki).
 
 ## Documentation Pages
 
