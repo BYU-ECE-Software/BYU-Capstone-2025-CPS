@@ -11,7 +11,7 @@ One major contributor to this project is **Trevor McClellan**, who pioneered thi
 | Page | Description |
 | :--- | :--- |
 | [Background](Background.md) | Introduction to CAN Bus, its various components, and its vulnerabilities. |
-| [Initial Setup](Initial-Setup.md) | Step-by-step guide for setting up the hardware (RP2040, CANable) and installing the required software (Python Backend, Node.js Frontend). Start here if you are building from scratch |
-| [Using the TestBed](Using-the-TestBed.md) | Instructions on connecting devices to the web dashboard, identifying boards, loading `candump` logs, and running normal simulations. Start here if you already have a complete simulator |
+| [Initial Setup](Initial-Setup.md) | Step-by-step guide for setting up the hardware (RP2040, CANable) and installing the required software (Python Backend, Node.js Frontend). Start here if you are building from scratch. |
+| [Using the TestBed](Using-the-TestBed.md) | Instructions on connecting devices to the web dashboard, identifying boards, loading `candump` logs, and running normal simulations. Start here if you already have a complete simulator. |
 | [Attack Simulation](Attack-Simulation.md) | Detailed procedures for executing real-time attacks, specifically covering Denial of Service (DoS) and ID Spoofing. |
 | [Student Lab](Student-Labs.md) | Educational exercises focused on learning how the CAN bus works and how to execute basic attacks on it. |
