@@ -2,7 +2,7 @@
 
 ## 1. 🚗 CANBUS Simulator
 
-This project focuses on analyzing data from, and behavior of, a vehicle **Controller Area Network (CANBUS)**. It gives users the opportunity to test and manipulate automotive protocols real-time in a safe, controlled environment.
+This project focuses on analyzing data from, and behavior of, a vehicle **Controller Area Network (CAN) Bus**. It gives users the opportunity to test and manipulate automotive protocols real-time in a safe, controlled environment.
 
 * **Go to the CANBUS Project:** **[CANBUS Project README](./CAN/README.md)**
 
@@ -17,3 +17,4 @@ This project implements a system for secure access control using **Radio-Frequen
 ---
 
 To explore either project, simply click the links above. Each project folder contains its own detailed `README.md` with specific setup instructions, schematics, and code information.
+
