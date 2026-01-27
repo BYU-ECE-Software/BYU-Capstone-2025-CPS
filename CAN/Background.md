@@ -1,6 +1,6 @@
 ## 💡 General Information
 
-### What is CAN Bus System
+### What is a CAN Bus System
 
 The Controller Area Network (CAN) bus is a communication system that lets multiple electronic components, called Electronic Control Units (ECUs), talk to each other inside vehicles or machines. It was developed by Bosch in the 1980s to reduce the number of wires in cars and to make communication between systems more efficient and reliable.
 
@@ -8,9 +8,9 @@ Before CAN, each device needs a direct connection to others, creating large, hea
 
 Today, CAN is used not just in cars but also in trucks, airplanes, factory equipment, medical devices, and robotics. Almost every modern vehicle relies on CAN to make the engine, brakes, airbags, and sensors communicate seamlessly.
 
-### How CAN Bus Works
+### How a CAN Bus Works
 
-CAN is like a group chat for machines. Every device on te network can send and receive messages, but only one can “talk” at a time. If two try to talk, the one with higher priority (lower ID number) continues while the other waits - preveting data collisions.
+CAN is like a group chat for machines. Every device on the network can send and receive messages, but only one can “talk” at a time. If two try to talk, the one with higher priority (lower ID number) continues while the other waits - preveting data collisions.
 
 Communication happens over two wires:
 
@@ -21,11 +21,11 @@ These carry opposite electrical signals (called differential signaling) to cance
 
 Each CAN message contains:
 
-* **A Unique ID** (shows what the data represent and its priority)
+* **A Unique ID** (shows what the data represents and its priority)
 * **A data field** (up to 8 bytes)
 * **Error-checking bits** (to verify accuracy)
 
-### Why CAN Is Important ###
+### Why the CAN Is Important ###
 
 * **Efficiency:** Instead of hundreds of wires, a single network connects everything.
 * **Reliability:** Built-in error detection and noise resistance.
@@ -33,11 +33,11 @@ Each CAN message contains:
 * **Scalability:** More devices can be added without redesigning the system.
 * **Real-time Communication:** Essential for safety-critical systems like braking or airbag deployments.
 
-### Weaknesses in CAN Bus ###
+### Weaknesses in a CAN Bus ###
 
-Can wasn’t designed with cybersecurity in mind because it was created before modern connected vehicles existed. As a result:
+CAN wasn’t designed with cybersecurity in mind because it was created before modern, internet connected vehicles existed. As a result, there is little to ensure the confidentiality, integrity, and availability of data on the CAN bus. Here are some specific vulnerabilities:
 
-* **No passwords or encryption:** Any connected device can send messages.
+* **No passwords or encryption:** Any connected device can read and send messages.
 
 * **No identity checks:** A fake device can impersonate real one.
 
@@ -45,7 +45,7 @@ Can wasn’t designed with cybersecurity in mind because it was created before m
 
 * **Replay and Denial-of-Service Attacks:** Attackers can flood or repeat data to disrupt normal operation.
 
-Example: A malicious message could disable traction control or falsely trigger warning lights if the attacker understands the CAN IDs.
+Example: A malicious message could disable traction control or even killswitch the vehicle if the attacker understands the CAN IDs.
 
 ### What CAN IDs Do ###
 
@@ -57,10 +57,10 @@ Every message has a numeric identifier (ID) that defines:
 
 ### CAN ID Filters ###
 
-To avoid overwhelming devices, CAN cotrollers can use filters that decide which messages to accept.
+To avoid overwhelming devices, ECUs use filters that decide which messages to accept.
 
 * **Acceptance Filters:** Only messages with certain IDs are processed, others are ignored.
-* **Hardware Filtering:** Filtering often happensn in the chip itself to save CPU time.
+* **Hardware Filtering:** Filtering often happens on the chip itself to save CPU time.
 
 **Advantages:**
 
@@ -95,4 +95,4 @@ To interpret:
 
 ### Summary ###
 
-The CAN bus is the nervous system of modern vehicles. It connects everything - from engine sensorsr to window controls - using a shared, efficient network. Understanding how it works is essential for mechanics, engineers, cybersecurity professionals, and hobbyists, especially as wehicles become increasingly connected and automated.
+The CAN bus is the nervous system of modern vehicles. It connects everything - from engine sensors to window controls - using a shared, efficient network. Understanding how it works is essential for mechanics, engineers, cybersecurity professionals, and consumers, especially as vehicles become increasingly connected and automated. While the CAN bus underpins nearly every critical vehicle function, traditional attacks against it generally require physical access to the vehicle’s internal network. However, in newer internet-connected vehicles, vulnerabilities in infotainment, telematics, or wireless interfaces can expose the CAN bus to remote attacks, dramatically raising the stakes and turning what was once a localized risk into a serious, large-scale cybersecurity threat.
