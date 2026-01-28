@@ -41,12 +41,12 @@ Read the following article and answer the questions to show your understanding: 
 ## Our CAN bus lab configuration
 In the photo below, you can see an example configuration of this CAN bus lab. Each Printed Circuit Board (PCB) represents a distinct Electronic Control Unit (ECU) in a given car. An ECU acts as a small computer that controls a specific automotive system, while the PCB provides the physical mounting and electrical connections for its components. For example, one of the boards could be the brakes ECU, one could be the engine ECU, and so on. The dashboard itself acts as several ECUs in one, receiving and transmitting for several different systems.
 
-[Need to Upload Photo of our lab](CAN/Using-the-TestBed.md#Uploading-a-CANdump)
+[Need to Upload Photo of our lab]
 
 ## Objective 2
 
 Part 1
-[instructions for uploading the test.log file to the web app here]()
+[instructions for uploading the test.log file to the web app here](Using-the-TestBed.md#Uploading-a-CANdump)
 
 Now run the simulation to confirm everything is set up and operating correctly. You’ll know everything is running properly if the dashboard lights up during the simulation and if each board has received all of the expected messages (indicated by a checkmark).
 
