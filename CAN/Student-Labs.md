@@ -11,4 +11,4 @@
 
 ## SETUP
 
-[Inital Setup](CAN/Initial-Setup.md)
+[Inital Setup](/Initial-Setup.md)
