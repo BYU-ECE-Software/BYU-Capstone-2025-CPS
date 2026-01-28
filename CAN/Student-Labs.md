@@ -46,7 +46,7 @@ In the photo below, you can see an example configuration of this CAN bus lab. Ea
 ## Objective 2
 
 Part 1
-[instructions for uploading the test.log file to the web app here](Using-the-TestBed.md#Uploading-a-CANdump)
+[instructions for uploading the test.log file to the web app here](Using-the-TestBed.md#uploading-a-candump)
 
 Now run the simulation to confirm everything is set up and operating correctly. You’ll know everything is running properly if the dashboard lights up during the simulation and if each board has received all of the expected messages (indicated by a checkmark).
 
