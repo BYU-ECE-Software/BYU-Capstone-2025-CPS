@@ -1,4 +1,7 @@
+import time
+
 from machine import Pin, I2C
+from lcd_i2c import LCD_I2C #We might have to change where the pins are
 import machine
 import utime
 import micropython
@@ -28,6 +31,15 @@ events = None
 
 # --- Configuration Loading Functions ---
 
+# Initialize I2C
+# Default ESP32 pins: SDA=GPIO21, SCL=GPIO22
+i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=100000)
+
+# Initialize LCD
+# Common addresses are 0x27 or 0x3F
+# Change if your LCD has a different address
+lcd = LCD_I2C(i2c, addr=0x27, cols=16, rows=2)
+
 def load_config():
     """Loads configuration from config.json file."""
     try:
@@ -35,6 +47,9 @@ def load_config():
             return json.load(f)
     except Exception as e:
         print(f"Error loading config.json: {e}")
+        lcd.print(f"Error loading config.json: {e}")
+        time.sleep(5)
+        lcd.clear()
         # Return default config if file can't be loaded
         return {
             "D0_PIN": 21,
@@ -55,6 +70,9 @@ def load_users():
             return json.load(f)
     except Exception as e:
         print(f"Error loading users.json: {e}")
+        lcd.print(f"Error loading users.json: {e}")
+        time.sleep(5)
+        lcd.clear()
         return []
 
 def load_events():
@@ -64,6 +82,9 @@ def load_events():
             return json.load(f)
     except Exception as e:
         print(f"Error loading events.json: {e}")
+        lcd.print(f"Error loading events.json: {e}")
+        time.sleep(5)
+        lcd.clear()
         return []
 
 # --- Wiegand Bit Array Helpers ---
@@ -120,17 +141,17 @@ def d1_pulse_handler(pin_obj):
 
 # --- OLED Helper Functions ---
 # (No changes needed)
-def oled_print(line1, line2="", line3="", line4=""):
-    """Helper to clear and write text to the OLED."""
-    global display, config
-    if display:
-        display.fill(0) # Clear the screen
-        display.text(line1, 0, 0)
-        display.text(line2, 0, 8) # 8 pixels per line
-        if config['SCREEN_HEIGHT'] > 32: 
-            display.text(line3, 0, 16)
-            display.text(line4, 0, 24)
-        display.show()
+# def lcd.print(line1, line2="", line3="", line4=""):
+#     """Helper to clear and write text to the OLED."""
+#     global display, config
+#     if display:
+#         display.fill(0) # Clear the screen
+#         display.text(line1, 0, 0)
+#         display.text(line2, 0, 8) # 8 pixels per line
+#         if config['SCREEN_HEIGHT'] > 32:
+#             display.text(line3, 0, 16)
+#             display.text(line4, 0, 24)
+#         display.show()
 
 # --- Peripheral Control Functions (Placeholders) ---
 # (No changes needed)
@@ -365,6 +386,7 @@ def process_card_data(bits_received, data_buffer):
 
     if bits_received == 0:
         print("[ERROR] No bits received.")
+        lcd.print("[ERROR] No bits received.")
         return None
 
     # Build raw bit string for hex conversion
@@ -476,7 +498,7 @@ def handle_raw_mode(result, data_buffer):
     oled_line_2 = f"CN: {result['cn']}"
     oled_line_3 = result['raw_hex']
     oled_line_4 = f"Parity: {'PASS' if result['parity_ok'] else 'FAIL'}"
-    oled_print(oled_line_1, oled_line_2, oled_line_3, oled_line_4)
+    lcd.print(oled_line_1, oled_line_2, oled_line_3, oled_line_4)
 
 # --- Access Control Functions ---
 # (No changes needed)
@@ -498,7 +520,7 @@ def find_user(fc, cn):
 def handle_access_granted(user):
     """Displays 'Access Granted' message with user name on OLED."""
     print(f"Access Granted: {user.get('Name', 'Unknown')}")
-    oled_print("Access Granted", user.get('Name', 'Unknown'), "", "")
+    lcd.print("Access Granted", user.get('Name', 'Unknown'), "", "")
     if user.get('Flag'):
         print(f"Flag: {user.get('Flag')}")
 
@@ -506,9 +528,9 @@ def handle_access_denied(reason, fc, cn):
     """Displays 'Access Denied' message with reason on OLED."""
     print(f"Access Denied: {reason}")
     if fc != -1:
-        oled_print("Access Denied", reason, f"FC: {fc} CN: {cn}", "")
+        lcd.print("Access Denied", reason, f"FC: {fc} CN: {cn}", "")
     else:
-        oled_print("Access Denied", reason, f"CN: {cn}", "")
+        lcd.print("Access Denied", reason, f"CN: {cn}", "")
 
 # --- Special Event Handler ---
 # (No changes needed)
@@ -596,6 +618,7 @@ def main():
     global pin_d0, pin_d1, display, config, users, events, wiegand_bit_array
     
     print("Loading configuration...")
+    lcd.print("Loading configuration...")
     config = load_config()
     users = load_users()
     events = load_events()
@@ -603,12 +626,14 @@ def main():
     mode = config.get('MODE', 'doorsim').lower()
     mracs_enabled = config.get('MRACS_ENABLED', False)
     print(f"System Mode: {mode.upper()}")
+    lcd.print(f"System Mode: {mode.upper()}")
     print(f"MRACS Enabled: {mracs_enabled}")
     print(f"Loaded {len(users)} users from users.json")
     print(f"Loaded {len(events)} events from events.json")
     
     if mode not in ['raw', 'doorsim', 'accessory']:
         print(f"Warning: Invalid MODE '{mode}', defaulting to 'doorsim'")
+        lcd.print(f"Warning: Invalid MODE '{mode}', defaulting to 'doorsim'")
         mode = 'doorsim'
     
     ap = network.WLAN(network.AP_IF)
@@ -626,6 +651,7 @@ def main():
         init_mqtt()
         if not mqtt_connect():
             print("MQTT connection failed - will retry")
+            lcd.print("MQTT connection failed - will retry")
     else:
         print("MQTT disabled (MRACS not enabled or wrong mode)")
     
@@ -650,7 +676,7 @@ def main():
                 config['SCREEN_WIDTH'], config['SCREEN_HEIGHT'], i2c, 
                 addr=oled_addr, flipped=config['OLED_FLIPPED']
             )
-            oled_print("System Ready.", "Please swipe...")
+            lcd.print("System Ready.", "Please swipe...")
             print("OLED Initialized.")
             
     except Exception as e:
@@ -670,14 +696,15 @@ def main():
             pin_d1.irq(trigger=Pin.IRQ_FALLING, handler=d1_pulse_handler)
 
             print("\nReader is active. Please swipe a card...")
+            lcd.print("Reader is active. Please swipe a card...")
 
         except Exception as e:
             print(f"Error setting up Wiegand pins: {e}")
-            oled_print("PIN ERROR", str(e))
+            lcd.print("PIN ERROR", str(e))
             return
     else:
         print("Accessory mode: Wiegand reader disabled")
-        oled_print("Accessory Mode", "Waiting for", "MQTT commands...", "")
+        lcd.print("Accessory Mode", "Waiting for", "MQTT commands...", "")
 
     # --- FIX: Main loop restructured ---
     
@@ -723,12 +750,13 @@ def main():
                             utime.sleep(4) # Hold result on screen
                             
                             if mode == 'raw':
-                                oled_print("Raw Mode Ready", "Please swipe...", "", "")
+                                lcd.print("Raw Mode Ready", "Please swipe...", "", "")
                             else:
-                                oled_print("System Ready.", "Please swipe...", "", "")
+                                lcd.print("System Ready.", "Please swipe...", "", "")
                             print("\n\nReader is active. Please swipe a card...")
                         else:
                             print("Card processing failed (0 bits or error). Buffer reset.")
+                            lcd.print("Card processing failed (0 bits or error). Buffer reset.")
                     
                     else:
                         # Card is *currently* being read (between pulses)
@@ -768,14 +796,14 @@ def main():
             break
         except Exception as e:
             print(f"An error occurred in the main loop: {e}")
-            oled_print("LOOP ERROR", str(e))
+            lcd.print("LOOP ERROR", str(e))
             utime.sleep(5) # Pause on error
             
     # Cleanup
     if pin_d0: pin_d0.irq(handler=None)
     if pin_d1: pin_d1.irq(handler=None)
     print("Interrupts detached. Program End.")
-    oled_print("SYSTEM HALTED.")
+    lcd.print("SYSTEM HALTED.")
 
 # Run main program
 if __name__ == '__main__':
