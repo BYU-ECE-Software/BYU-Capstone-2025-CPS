@@ -48,10 +48,12 @@ In the photos below, you can see an example configuration of this CAN bus lab.
 
 Each physical PCB can represent one or many a distinct ECUs in the simulated car. For example, one board could be the brakes ECU, another the engine ECU, and so on. The dashboard itself acts as several ECUs in one, receiving and transmitting for several different systems.
 
-![Nine Printed Circuit Boards from the CAN Sim](JustPCBs.jpg)
+<img src="JustPCBs.jpg" width="20%" alt="Nine Printed Circuit Boards from the CAN Sim" />
 >Each of these green boards is a PCB. They are the "brains" of the CAN Bus.
 
-![The Top Layer of the CAN Sim Showing the Dashboard](CANSimDashboard.jpg)
+
+
+<img src="CANSimDashboard.jpg" width="20%" alt="The Top Layer of the CAN Sim Showing the Dashboard" />
 >The dashboard of a car has several ECUs within it. (speedometer, tachometer, fuel gauge, etc.)
 
 ## Objective 2
