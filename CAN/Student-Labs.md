@@ -48,13 +48,11 @@ In the photos below, you can see an example configuration of this CAN bus lab.
 
 Each physical PCB can represent one or many a distinct ECUs in the simulated car. For example, one board could be the brakes ECU, another the engine ECU, and so on. The dashboard itself acts as several ECUs in one, receiving and transmitting for several different systems.
 
-<img src="JustPCBs.jpg" width="20%" alt="Nine Printed Circuit Boards from the CAN Sim" />
->Each of these green boards is a PCB. They are the "brains" of the CAN Bus.
+<img src="JustPCBs.jpg" width="20%" alt="Nine Printed Circuit Boards from the CAN Sim" /> <br>*Each of these green boards is a PCB. They are the "brains" of the CAN Bus.*
 
+<br>
 
-
-<img src="CANSimDashboard.jpg" width="20%" alt="The Top Layer of the CAN Sim Showing the Dashboard" />
->The dashboard of a car has several ECUs within it. (speedometer, tachometer, fuel gauge, etc.)
+<img src="CANSimDashboard.jpg" width="20%" alt="The Top Layer of the CAN Sim Showing the Dashboard" /> <br>*The dashboard of a car has several ECUs within it. (speedometer, tachometer, fuel gauge, etc.)*
 
 ## Objective 2
 
@@ -85,7 +83,10 @@ Now, you will inject a specially crafted message to attack a specific ECU: the s
 
 To do this, you need to understand that a car’s speed is calculated from the wheels’ speed. The sensors that measure wheel speed are a part of the car’s Anti-lock Braking System (ABS). The ABS is one of the many ECUs in the car’s CAN network, and it regularly broadcasts this speed data on the CAN bus. If we can reverse engineer how these broadcast messages work, we can spoof our own messages to influence any ECUs that listen to ABS data.
 
-#### 🧠 Understanding the Parts of a CAN Message
+You also need to understand how a messages, called frames, are structured on the can. A CAN Database (DBC) file contains the syntax for CAN frames. DBC files are proprietary, and thus can sometimes be hard to obtain. For newer cars, hackers will reverse engineer DBC files. Fortunately, we have access to the DBC file that the 2017 Hyundai Sonata uses (where the CAN Simulator's Dashboard is from).
+
+#### 🧠 Understanding the Parts of a CAN frame
+
 Keep these key points in mind while reviewing the DBC lines:
 
  - The DBC is designed to be human-readable, so everything is in decimal 
