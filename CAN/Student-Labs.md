@@ -42,13 +42,17 @@ https://www.csselectronics.com/pages/can-bus-simple-intro-tutorial
 
 
 ## Our CAN bus lab configuration
-In the photo below, you can see an example configuration of this CAN bus lab. 
+In the photos below, you can see an example configuration of this CAN bus lab. 
 - ECU (Electronic Control Unit): Acts as a small computer that controls a specific automotive system.
 - PCB (Printed Circuit Board): Provides the physical mounting and electrical connections for the ECU components.
 
-Each PCB in this lab represents a distinct ECU in a given car. For example, one board could be the brakes ECU, another the engine ECU, and so on. The dashboard itself acts as several ECUs in one, receiving and transmitting for several different systems.
+Each physical PCB can represent one or many a distinct ECUs in the simulated car. For example, one board could be the brakes ECU, another the engine ECU, and so on. The dashboard itself acts as several ECUs in one, receiving and transmitting for several different systems.
 
-[Need to Upload Photo of our lab]
+![Nine Printed Circuit Boards from the CAN Sim](JustPCBs.jpg)
+>Each of these green boards is a PCB. They are the "brains" of the CAN Bus.
+
+![The Top Layer of the CAN Sim Showing the Dashboard](CANSimDashboard.jpg)
+>The dashboard of a car has several ECUs within it. (speedometer, tachometer, fuel gauge, etc.)
 
 ## Objective 2
 
