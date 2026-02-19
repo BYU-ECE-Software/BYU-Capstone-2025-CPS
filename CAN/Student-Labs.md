@@ -102,7 +102,49 @@ Because the CAN bus is a broadcast network without built-in encryption, there is
 
 ---
 
+## Threat Intelligence Mission: What’s Valuable on the CAN Bus?
+
+Before we continue attacking the CAN bus, we need to think like real adversaries.
+
+You now know:
+- Every ECU can see every message.
+- Messages are not encrypted.
+- The network is broadcast-based.
+
+So here’s the big question:
+
+### ❓ If you were an attacker, what information would you want to steal from a vehicle’s CAN bus?
+
+---
+
+### 🔍 Your Research Task
+
+1. Research what types of data are transmitted over a vehicle’s CAN bus.
+2. Identify at least **five types of information** that could be valuable to an attacker.
+3. For each item:
+   - Explain **why it would be valuable**
+   - Identify which part of the CIA Triad it impacts
+   - Describe a real-world misuse scenario
+  
+
+### 🎯 Deliverable
+
+Create a small table like this:
+
+| CAN Data | Why Valuable | CIA Impact | Real-World Risk |
+|----------|-------------|------------|-----------------|
+| Example: Speed | Can track driving behavior | Confidentiality | Insurance fraud or surveillance |
+---
 ## Objective 2
+
+### Some though Provoking Questions:
+- Could someone track a driver?  
+- Could someone profile driving habits?  
+- Could someone prepare for vehicle theft?  
+- Could someone use data for blackmail or surveillance?  
+- Could someone disable safety features after learning system behavior?
+
+---
 
 ### Part 1
 
