@@ -9,7 +9,28 @@
 
 - Learn how to mitigate the risk of CAN bus attacks.
 ---
-## ⚙️ SETUP
+# 🛡️ The Security Mission: The CIA Triad
+
+In this lab, you aren't just a hacker; you are a security analyst testing the defenses of a vehicle.  
+To do this, you must understand the three pillars of cybersecurity known as the **CIA Triad**:
+
+## 🔐 Confidentiality
+Keeping data private.  
+If a hacker can see your GPS location or call logs, they have broken **Confidentiality**.
+
+
+## 🧾 Integrity
+Keeping data accurate.  
+If a hacker changes a message so the car receives false information, they have broken **Integrity**.
+
+
+## ⚙️ Availability
+Keeping systems ready.  
+If a hacker floods the network so the brakes or dashboard stop responding, they have broken **Availability**.
+
+--- 
+
+## 🛠️ SETUP
 
 [Inital Setup](Initial-Setup.md)
 
@@ -53,6 +74,33 @@ Each physical PCB can represent one or many a distinct ECUs in the simulated car
 <br>
 
 <img src="CANSimDashboard.jpg" width="20%" alt="The Top Layer of the CAN Sim Showing the Dashboard" /> <br>*The dashboard of a car has several ECUs within it. (speedometer, tachometer, fuel gauge, etc.)*
+
+
+## 🕵️ CIA Challenge: The "Invisible" Pillar
+
+### 🚗 The Situation
+You just read about how the CAN bus works.  
+You noticed that every ECU on the network can see every message being sent by every other ECU.
+
+
+#### ❓ The Question
+Which part of the CIA Triad is naturally "broken" by the way the CAN bus is designed?
+
+> ✍️ Write down your guess before revealing the answer below.
+
+
+<details>
+<summary>🔎 Click to Reveal the Answer</summary>
+
+### ✅ The Reveal
+
+This is a lack of **Confidentiality**.
+
+Because the CAN bus is a broadcast network without built-in encryption, there is no "privacy" between components. If a hacker plugs into your OBD-II port, they can **eavesdrop on all the data flowing through your car**.
+
+</details>
+
+---
 
 ## Objective 2
 
@@ -155,6 +203,33 @@ To trick the speedometer, you must perform these steps in reverse. Follow this w
 
 >Should see something like 386#2F202F202F202F20 or 386#8020802080208020 (remove this, this is a note for professors/TAs only)
 
+
+## 🕵️ CIA Challenge: The Fake Message
+
+### 🚗 The Situation
+You just injected a "user-crafted" message into the network to force the speedometer to hit 160 mph.
+
+
+#### ❓ The Question
+Which part of the CIA Triad did you just compromise?
+
+> ✍️ Write down your guess before revealing the answer below.
+
+
+<details>
+<summary>🔎 Click to Reveal the Answer</summary>
+
+### ✅ The Reveal
+
+This was an attack on **Integrity**.
+
+By "spoofing" (lying to) the car with fake data, you compromised the **accuracy of the information**.  
+The car can no longer trust that the messages on the bus are untampered and true.
+
+</details>
+
+---
+
 ## Objective 3
 
 ### Part 1: Denial of Service (DoS)
@@ -179,6 +254,33 @@ Finally, execute a Denial of Service (DoS) attack on the CAN bus so that most or
 
 [Provide link to article about encrypting CAN traffic and what car manufacturers are doing about attacks like this] 
 
-**Final Reflection**: Reflect on how significant you think the lack of security on the CAN bus is. Consider the special impact the CAN bus’s security—or lack thereof—could have on cars connected to the internet.
+## 🕵️ CIA Challenge: The Silent Network
+
+### 🚗 The Situation
+You flooded the CAN bus with high-priority messages, preventing other ECUs from talking.
+
+
+#### ❓ The Question
+Which part of the CIA Triad is being targeted here?
+
+> ✍️ Write down your guess before revealing the answer below.
+
+
+<details>
+<summary>🔎 Click to Reveal the Answer</summary>
+
+### ✅ The Reveal
+
+This was an attack on **Availability**.
+
+A Denial of Service (DoS) attack ensures that legitimate systems are no longer available for use.  
+If a "Brake" message cannot get through because the network is too busy, a life-saving system has become unavailable.
+
+</details>
+
+---
+
+## Final Reflection 
+Reflect on how significant you think the lack of security on the CAN bus is. Consider the special impact the CAN bus’s security—or lack thereof—could have on cars connected to the internet.
 
 **Your Task**: Write a paragraph or two explaining your thoughts on the issue of protecting the CAN bus from attacks. There is no right or wrong answer; we are looking to see that you have deeply considered the situation and have a well-formulated opinion.
