@@ -129,8 +129,21 @@ This adapter is the bridge between your computer and the CAN network.
 
 >With termination on the CANable side and termination on the far end board, you end up with the standard two terminated ends of the bus.
 
-**The complete setup should look like this:**
+**The complete setup should look like this:**  
+<img src="CaseDash.png" width="50%" alt="The top level of the CAN Simulator showing the dashboard and Pi" /> <br>
+1\. The Raspberry Pi 5 that runs the web app and can flash the boards.  
+2\. A 2017 Hyundai Sonata dash board.
+<br><br>
 
+<img src="CaseInterior.png" width="50%" alt="The bottom level of the CAN Simulator showing the PCBs and power cables" /> <br>
+3\. The Pi again.  
+4\. A compact powerstrip that everything plugs into.  
+5\. The 10-port USB hub that gives power to each PCB and allows them to be flashed with new code.  
+6\. The PCBs that act as the ECUs in the simulation.  
+7\. The CANable adapter that allows the Pi to communicate with the CAN bus.  
+<br>
+
+**Here's another example using [Trevor's](https://github.com/trevormcclellan/CAN-Testbed/wiki) Setup:**
 ![diagram](system_diagram.png)
 
 ## Software Setup
@@ -469,3 +482,6 @@ What this does
 - Prevents users from seeing unnecessary UI elements
 
 - Creates a cleaner, full-screen interface
+
+## When attempting to flash a board, you get a "Permission Denied" error
+Make sure whatever linux user you are trying to setup the simulator with has permissions to manage serial ports. If you aren't using root, make sure to add your user to the 'dialout' group.
