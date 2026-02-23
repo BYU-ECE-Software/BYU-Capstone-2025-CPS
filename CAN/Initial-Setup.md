@@ -483,5 +483,5 @@ What this does
 
 - Creates a cleaner, full-screen interface
 
-## When attempting to flash a board, you get a "Permission Denied" error
+### When attempting to flash a board, you get a "Permission Denied" error
 Make sure whatever linux user you are trying to setup the simulator with has permissions to manage serial ports. If you aren't using root, make sure to add your user to the 'dialout' group.
