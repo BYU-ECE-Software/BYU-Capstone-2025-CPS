@@ -147,7 +147,73 @@ This adapter is the bridge between your computer and the CAN network.
 ![diagram](system_diagram.png)
 
 ## Software Setup
+### Setting up the development environment and flashing the CANBed RP2040 boards
 
+#### 1. First, pull the project files from the repository to your local machine
+```
+git clone https://github.com/trevormcclellan/CAN-Testbed
+cd CAN-Testbed
+```
+#### 2. There are two ways to get the libraries ready
+#### Automatic Setup (Arduino CLI) (Recommended):
+Run the built-in dependency script. This handles the installation of arduino-cli and all required libraries (like the custom Longan Labs CANBed library) automatically. If this is the first time you run the script it will install it in the user's home directory. 
+
+```
+./rp2040/install_deps.sh
+```
+Note: `install_deps.sh` is located in the `rp2040` directory.
+
+#### The Manual Route (Arduino IDE):
+If you prefer using the graphical interface:
+1. Follow the setup guide in the CANBed RP2040 documentation under “Getting Started with Arduino IDE”, and complete everything up through the “Download and install the library” section [See Here](https://docs.longan-labs.cc/1030018/#getting-started-with-arduino-ide)
+2. Next, go to the rp2040 folder in this repository and open the CANBed.ino file using the Arduino IDE
+3. In the Arduino IDE, go to Tools → Manage Libraries
+4. Search for and install the following libraries:
+   - ArduinoJson by Benoit Blanchon
+   - ArduinoQueue by Einar Arnason
+
+<img width="363" height="392" alt="image" src="https://github.com/user-attachments/assets/cc5e8e18-403c-4236-b554-539ca98f535b" />
+<img width="301" height="313" alt="image" src="https://github.com/user-attachments/assets/374c602d-0a67-4192-bfc0-cc099b6ec1d8" />
+
+5. Then, check for the mcp_canbus library by Longan Labs. This should already be installed from the zip file in Step 1 of the manual stetup. If it is not showing up, refer back to the instructions provided [here](https://docs.longan-labs.cc/1030018/#download-the-install-the-library).
+6. Finally, select the correct board by going to:
+Tools → Board → Longan RP2040 Boards → CANBed 2040
+If you do not see this board option listed, go back and make sure Step 1 was completed correctly
+
+<img width="889" height="511" alt="image" src="https://github.com/user-attachments/assets/e0482eea-c6c5-4192-a37c-e7b313a1895c" />
+
+#### 3. Flash the Boards with the CANBench Firmware
+#### Automatic Firmware Flashing (Arduino CLI) (Recommended) 
+The easiest way to flash the boards is by using the `flash_boards.sh` script located in the `rp2040` directory. The script will compile the sketch and automatically flash it onto any CANBed RP2040 boards that are currently connected.
+
+Run the following command to install the base CANBench firmware:
+
+```
+./rp2040/flash_boards.sh ./rp2040/CANBed/CANBed.ino
+```
+After running the command, you will be asked to turn on the boards you want to program. Once everything is powered on, press Enter to start the flashing process.
+
+> **Note:** If you are reflashing the firmware later, make sure no other programs (including the web dashboard) are using the serial ports. If the dashboard is open, close the browser tab before running the script.
+
+#### Manual Firmware Flashing (Arduino IDE)
+1. Confirm that the selected board is CANBed 2040
+(See Step 2 The Manual Route: Install the Arduino IDE and Libraries, instruction #5.)
+2. Select the correct port for the board you are flashing
+   > It may help to connect one board at a time to avoid selecting the wrong port
+   > ALso make sure no other application is using the serial port (including the web dashboard). The upload will fail if the port is busy.
+
+<img width="894" height="238" alt="image" src="https://github.com/user-attachments/assets/c2aa1a2a-0432-44ce-b722-b331e3d72df6" />
+
+3. Click the Upload arrow in the top toolbar of the Arduino IDE
+   >The sketch will take a few seconds to compile and upload. Once complete, the blue LED on the CANBed board should blink six times, indicating it has booted successfully
+
+<img width="528" height="107" alt="image" src="https://github.com/user-attachments/assets/726f0d5d-a962-4178-8bcf-549c85b7c39e" />
+
+4. Disconnect or power off the current board
+5. Connect the next board and select its corresponding port
+6. Repeat the upload process for each remaining board
+
+### Web Backend Set-up
 ### 1. Update Your System
 Make sure your software is up-to-date by running:
 
