@@ -278,11 +278,13 @@ The car can no longer trust that the messages on the bus are untampered and true
 
 Finally, execute a Denial of Service (DoS) attack on the CAN bus so that most or all of the expected messages are missed by the boards.
 
-[Insert instructions to flash a board with the DoS code]
+One of the boards should already be flashed with DOS attack firmware. If this is the case, it should have been powered off up until now, and it should have a physical label near its power button reading, "DOS".
 
-#### 🖥️ How it Works: Network Flooding
+If this isn't the case, you will need to flash one of the boards with the DOS firmware by following the instructions in the [initial-setup document](https://github.com/BYU-ECE-Software/BYU-Capstone-2025-CPS/blob/main/CAN/Initial-Setup.md#3-flash-the-boards-with-the-canbench-firmware).
 
-[Perhaps insert a review of the DoS code that explains how it works, i.e. flooding the network with hi-pri messages so no other ECU can communicate] 
+**Flash the boards with the Dos.ino file intead of the normal code the instructions use. This file is found in Trevor's repo under rp240 > examples > DoS**
+
+#### 🖥️ How it Works: Network Flooding 
 
 **Execution Steps:**
 1. Flash the board: Once the board is flashed with the DoS code, power it off.
@@ -290,11 +292,12 @@ Finally, execute a Denial of Service (DoS) attack on the CAN bus so that most or
 3. Active Attack: Rerun the same simulation, but power the attacker board on and off at various points throughout the simulation.
 4. Observation: Observe how the behavior of the dashboard changes when the attacking board is powered on.
 
-[Insert reflection questions about how to prevent this or methods of perpetrating an attack, such as various physical access methods or internet access]
+* What are some ways that this type of attack could be perpetrated? (physically or digitally)
+* How could you prevent a DOS attack from happening to a car you were designing?
 
 ### Part 2: Security & Industry Response
 
-[Provide link to article about encrypting CAN traffic and what car manufacturers are doing about attacks like this] 
+Research what the automotive industry is doing to prevent CAN bus attacks.
 
 ## 🕵️ CIA Challenge: The Silent Network
 
