@@ -4,17 +4,18 @@ The following sections are step by step instructions on how to perform certain a
 This first step in either attack, is to choose a board to act as your attacking board.
 
 ## Message Injection/Spoofing
-1. Find your attacking board in the web interface.
-2. Click on its "Configure Injection" button.
+1. Choose a board in the web interface to be the attacking board.
+2. Click your chosen board's "Configure Injection" button.
 3. Input the message you want to inject into the "Message" field.
 >The message should follow the format ID#Message with the ID being the CANID of the intended recipient of the message. Everything should be in hexadecimal.
 4. Enter the number of times you'd like to repeat the message into the "Repeat" field.
->If you are attempting to attack the physical speedometer on the 2017 Hyundai Dashboard included with the simulator, you must repeat this message a large number of times in order to see the effect.
+>If you are following along in the student lab, you may be trying to attack the physical speedometer on the 2017 Hyundai Dashboard included with the simulator. In this case, you must repeat this message a large number of times in order to see the effect. Try 500-1000 times to start. Feel free to experiment with this number to see how the behavior changes!
 5. Input the interval at which you'd like the messages to be sent into the "Interval" field.
->Again, if attacking the speedometer, this must be a relatively small interval to have a consistent effect.
+>Again, if attacking the speedometer, this must be a relatively small interval to have a consistent effect. If this is your first time, try something smaller than 20.
 6. Enter how many miliseconds you want the attacking board to wait before beginning the attack into the "Start Time" field.
 7. Click "Configure" to save your changes.
-8. Start the simulation. You should see your injected messages in the log upon completion of the simulation.
+8. Start the simulation. You should see your injected messages in the log of the victim board upon completion of the simulation.
+>You will only see these injected messages if one of your boards is configured to receive them. See [Setting ID Filtering](https://github.com/BYU-ECE-Software/BYU-Capstone-2025-CPS/blob/main/CAN/Using-the-TestBed.md#setting-id-filtering).
 
 ## Denial of Service
 The DOS attack is unique in the fact that it is not configured using the web interface. You must instead flash your chosen attacker board with DOS firmware. If you are working on a newly constructed simulator, you can follow these instructions to flash a board with DOS firmware:
