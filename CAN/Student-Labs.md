@@ -8,29 +8,10 @@
 - Demonstrate the use of false, high-priority messages to disrupt board functions.
 
 - Learn how to mitigate the risk of CAN bus attacks.
----
-# 🛡️ The Security Mission: The CIA Triad
 
-In this lab, you aren't just a hacker; you are a security analyst testing the defenses of a vehicle.  
-To do this, you must understand the three pillars of cybersecurity known as the **CIA Triad**:
+<br>
 
-## 🔐 Confidentiality
-Keeping data private.  
-If a hacker can see your GPS location or call logs, they have broken **Confidentiality**.
-
-
-## 🧾 Integrity
-Keeping data accurate.  
-If a hacker changes a message so the car receives false information, they have broken **Integrity**.
-
-
-## ⚙️ Availability
-Keeping systems ready.  
-If a hacker floods the network so the brakes or dashboard stop responding, they have broken **Availability**.
-
---- 
-
-## 🛠️ SETUP
+## SETUP
 
 [Inital Setup](Initial-Setup.md)
 
@@ -38,18 +19,20 @@ If a hacker floods the network so the brakes or dashboard stop responding, they 
 >These steps should have already been accomplished for any students starting the lab. If you are
 >a student, begin with Objective 1.
 
+<br>
+
 ## Objective 1
 
-The CAN bus is a communication system that vehicles use to coordinate and share information between key components. The CAN bus links important systems together such as the dashboard, brakes, engine, headlights, and infotainment system. Like any other network of devices, the CAN bus can be hacked and disrupted. To attack and defend a CAN bus, you must first understand how it works.
+The CAN bus is a network that vehicles use to coordinate and share information between key components. These components include things like the dashboard, brakes, engine, headlights, and infotainment system. Like any other network of devices, the CAN bus can be hacked and disrupted. To attack and defend a CAN bus, you must first understand how it works.
 
-### 📖 Required Reading & Research
+### Required Preparatory Reading
 Read the following article and answer the questions to show your understanding: 
 
 https://www.csselectronics.com/pages/can-bus-simple-intro-tutorial
 
 1. What does the acronym “CAN” stand for, and what is the primary role of a CAN bus in a vehicle or machine?
 
-2. Describe the physical wiring of a typical CAN network—what kind of cable is used and how are the two wires named/colored (according to the article)?
+2. Describe the physical wiring of a typical CAN network. What kind of cable is used, and how are the two wires named/colored (according to the article)?
 
 3. What are the “Top 4 benefits” of using a CAN bus network, and how does each one specifically improve real-world automotive or industrial systems?
 
@@ -61,6 +44,46 @@ https://www.csselectronics.com/pages/can-bus-simple-intro-tutorial
 
 **Check out this YouTube video that shows CAN bus attacks in real time! (3:06 and on specifically talks about the CAN Bus): https://youtu.be/MK0SrxBC1xs**
 
+---
+You just read about how the CAN bus works.  
+You noticed that every ECU on the network can see every message being sent by every other ECU.
+
+**Which part of the CIA Triad is naturally "broken" by the way the CAN bus is designed?**
+
+
+<details>
+<summary>🔎 Click to Reveal the Answer</summary>
+
+<br>This is a lack of **Confidentiality**.
+
+Because the CAN bus is a broadcast network without built-in encryption, there is no "privacy" between components. If a hacker plugs into your OBD-II port, they can **eavesdrop on all the data flowing through your car**.
+
+</details>
+
+---
+
+So here’s the big question:
+
+### If you were an attacker, what information would you want to steal from a vehicle’s CAN bus?
+
+---
+
+### Your Research Task
+
+1. Research what types of data are transmitted over a vehicle’s CAN bus.
+2. Identify at least **five types of information** that could be valuable to an attacker.
+3. For each item:
+   - Explain **why it would be valuable**
+   - Describe a real-world scenario where this information could be abused
+  
+>Some though Provoking Questions:
+>- Could someone track a driver?  
+>- Could someone profile driving habits?  
+>- Could someone steal the vehicle?  
+>- Could someone use data for blackmail or surveillance?  
+>- Could someone disable safety features?
+
+<br><br><br>
 
 ## Our CAN bus lab configuration
 In the photos below, you can see an example configuration of this CAN bus lab. 
@@ -75,76 +98,9 @@ Each physical PCB can represent one or many a distinct ECUs in the simulated car
 
 <img src="CANSimDashboard.jpg" width="20%" alt="The Top Layer of the CAN Sim Showing the Dashboard" /> <br>*The dashboard of a car has several ECUs within it. (speedometer, tachometer, fuel gauge, etc.)*
 
-
-## 🕵️ CIA Challenge: The "Invisible" Pillar
-
-### 🚗 The Situation
-You just read about how the CAN bus works.  
-You noticed that every ECU on the network can see every message being sent by every other ECU.
-
-
-#### ❓ The Question
-Which part of the CIA Triad is naturally "broken" by the way the CAN bus is designed?
-
-> ✍️ Write down your guess before revealing the answer below.
-
-
-<details>
-<summary>🔎 Click to Reveal the Answer</summary>
-
-### ✅ The Reveal
-
-This is a lack of **Confidentiality**.
-
-Because the CAN bus is a broadcast network without built-in encryption, there is no "privacy" between components. If a hacker plugs into your OBD-II port, they can **eavesdrop on all the data flowing through your car**.
-
-</details>
-
----
-
-## Threat Intelligence Mission: What’s Valuable on the CAN Bus?
-
-Before we continue attacking the CAN bus, we need to think like real adversaries.
-
-You now know:
-- Every ECU can see every message.
-- Messages are not encrypted.
-- The network is broadcast-based.
-
-So here’s the big question:
-
-### ❓ If you were an attacker, what information would you want to steal from a vehicle’s CAN bus?
-
----
-
-### 🔍 Your Research Task
-
-1. Research what types of data are transmitted over a vehicle’s CAN bus.
-2. Identify at least **five types of information** that could be valuable to an attacker.
-3. For each item:
-   - Explain **why it would be valuable**
-   - Identify which part of the CIA Triad it impacts
-   - Describe a real-world misuse scenario
+<br><br><br>
   
-
-### 🎯 Deliverable
-
-Create a small table like this:
-
-| CAN Data | Why Valuable | CIA Impact | Real-World Risk |
-|----------|-------------|------------|-----------------|
-| Example: Speed | Can track driving behavior | Confidentiality | Insurance fraud or surveillance |
----
 ## Objective 2
-
-### Some though Provoking Questions:
-- Could someone track a driver?  
-- Could someone profile driving habits?  
-- Could someone prepare for vehicle theft?  
-- Could someone use data for blackmail or surveillance?  
-- Could someone disable safety features after learning system behavior?
-
----
 
 ### Part 1
 
@@ -175,7 +131,7 @@ To do this, you need to understand that a car’s speed is calculated from the w
 
 You also need to understand how a messages, called frames, are structured on the can. A CAN Database (DBC) file contains the syntax for CAN frames. DBC files are proprietary, and thus can sometimes be hard to obtain. For newer cars, hackers will reverse engineer DBC files. Fortunately, we have access to the DBC file that the 2017 Hyundai Sonata uses (where the CAN Simulator's Dashboard is from).
 
-#### 🧠 Understanding the Parts of a CAN frame
+#### Understanding the Parts of a CAN frame
 
 Keep these key points in mind while reviewing the DBC lines:
 
@@ -206,7 +162,7 @@ See the image below for a breakdown of what’s contained in line 2 (3-5 will be
 
 Now apply this to an actual CAN frame. 
 
-### 🔎 Example Analysis: Speed Data Frame
+### Example Analysis: Speed Data Frame
 
 Let’s break down the following CAN frame as an example:
 
@@ -246,27 +202,14 @@ To trick the speedometer, you must perform these steps in reverse. Follow this w
 >Should see something like 386#2F202F202F202F20 or 386#8020802080208020 (remove this, this is a note for professors/TAs only)
 
 
-## 🕵️ CIA Challenge: The Fake Message
-
-### 🚗 The Situation
-You just injected a "user-crafted" message into the network to force the speedometer to hit 160 mph.
-
-
-#### ❓ The Question
 Which part of the CIA Triad did you just compromise?
-
-> ✍️ Write down your guess before revealing the answer below.
-
 
 <details>
 <summary>🔎 Click to Reveal the Answer</summary>
-
-### ✅ The Reveal
-
+<br>
 This was an attack on **Integrity**.
 
-By "spoofing" (lying to) the car with fake data, you compromised the **accuracy of the information**.  
-The car can no longer trust that the messages on the bus are untampered and true.
+By "spoofing" (lying to) the car with fake data, you compromised the **accuracy of the information**.
 
 </details>
 
@@ -274,7 +217,7 @@ The car can no longer trust that the messages on the bus are untampered and true
 
 ## Objective 3
 
-### Part 1: Denial of Service (DoS)
+### Denial of Service (DoS)
 
 Finally, execute a Denial of Service (DoS) attack on the CAN bus so that most or all of the expected messages are missed by the boards.
 
@@ -284,7 +227,7 @@ If this isn't the case, you will need to flash one of the boards with the DOS fi
 
 **Flash the boards with the Dos.ino file intead of the normal code the instructions use. This file is found in Trevor's repo under rp240 > examples > DoS**
 
-#### 🖥️ How it Works: Network Flooding 
+#### How it Works: Network Flooding 
 
 **Execution Steps:**
 1. Flash the board: Once the board is flashed with the DoS code, power it off.
@@ -292,36 +235,25 @@ If this isn't the case, you will need to flash one of the boards with the DOS fi
 3. Active Attack: Rerun the same simulation, but power the attacker board on and off at various points throughout the simulation.
 4. Observation: Observe how the behavior of the dashboard changes when the attacking board is powered on.
 
-* What are some ways that this type of attack could be perpetrated? (physically or digitally)
-* How could you prevent a DOS attack from happening to a car you were designing?
-
-### Part 2: Security & Industry Response
-
-Research what the automotive industry is doing to prevent CAN bus attacks.
-
-## 🕵️ CIA Challenge: The Silent Network
-
-### 🚗 The Situation
-You flooded the CAN bus with high-priority messages, preventing other ECUs from talking.
-
-
-#### ❓ The Question
-Which part of the CIA Triad is being targeted here?
-
-> ✍️ Write down your guess before revealing the answer below.
-
+Which part of the CIA Triad was being targeted here?
 
 <details>
 <summary>🔎 Click to Reveal the Answer</summary>
-
-### ✅ The Reveal
-
+<br>
 This was an attack on **Availability**.
 
 A Denial of Service (DoS) attack ensures that legitimate systems are no longer available for use.  
 If a "Brake" message cannot get through because the network is too busy, a life-saving system has become unavailable.
 
 </details>
+
+What are some ways that this type of attack could be perpetrated? (physically or digitally)
+How could you prevent a DOS attack from happening to a car you were designing?
+
+## Objective 4
+### Security & Industry Response
+
+Research what the automotive industry is doing to prevent CAN bus attacks.
 
 ---
 
