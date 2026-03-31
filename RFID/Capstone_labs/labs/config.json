@@ -1,0 +1,8 @@
+{
+  "labs": [
+    { "id": "lab1", "title": "Lab 1: Identify What Frequency a Card Uses" },
+    { "id": "lab2", "title": "Lab 2: Read and Interpret Basic Badge Data" },
+    { "id": "lab3", "title": "Lab 3: Defensive Risk Assessment" },
+    { "id": "lab4", "title": "Lab 4: Card Handling and Decommissioning" }
+  ]
+}
