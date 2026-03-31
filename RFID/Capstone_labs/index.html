@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capstone Labs</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #002E5D;
+      --navy-dark:  #001f3f;
+      --white:      #ffffff;
+      --gray-light: #f4f6f8;
+      --gray-border:#dde1e7;
+      --correct:    #1a7f37;
+      --correct-bg: #dafbe1;
+      --incorrect:  #cf222e;
+      --incorrect-bg:#ffebe9;
+      --accent:     #0057b8;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--gray-light);
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    header h1 { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.02em; }
+    #lab-counter { font-size: 0.85rem; opacity: 0.75; }
+    .header-logo { height: 36px; width: auto; display: block; }
+
+    /* ── Layout ── */
+    .layout { display: flex; min-height: calc(100vh - 60px); }
+
+    nav {
+      width: 240px;
+      background: var(--navy-dark);
+      flex-shrink: 0;
+      padding: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    nav ul { list-style: none; }
+    .nav-logo-wrap { padding: 1.5rem; }
+    .nav-logo-wrap img { width: 100%; height: auto; opacity: 0.85; display: block; }
+    nav ul li a {
+      display: block;
+      padding: 0.65rem 1.5rem;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    nav ul li a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    nav ul li a.active { color: var(--white); border-left-color: var(--white); background: rgba(255,255,255,0.1); font-weight: 600; }
+    nav ul li a.completed::after { content: " ✓"; opacity: 0.6; }
+
+    main { flex: 1; padding: 2.5rem 3rem; max-width: 860px; }
+
+    /* ── Markdown ── */
+    #lab-content h1 { font-size: 1.9rem; color: var(--navy); margin-bottom: 0.5rem; }
+    #lab-content h2 { font-size: 1.3rem; color: var(--navy); margin: 2rem 0 0.75rem; border-bottom: 2px solid var(--gray-border); padding-bottom: 0.4rem; }
+    #lab-content h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; }
+    #lab-content p  { line-height: 1.7; margin-bottom: 1rem; }
+    #lab-content ul, #lab-content ol { margin: 0.75rem 0 1rem 1.5rem; line-height: 1.7; }
+    #lab-content li { margin-bottom: 0.3rem; }
+    #lab-content code { background: #eef0f3; padding: 0.15em 0.4em; border-radius: 3px; font-size: 0.88em; font-family: "SF Mono", "Fira Code", monospace; }
+    #lab-content pre { background: #1e2330; color: #cdd6f4; padding: 1.25rem; border-radius: 6px; overflow-x: auto; margin: 1rem 0; }
+    #lab-content pre code { background: none; padding: 0; color: inherit; font-size: 0.88rem; }
+    #lab-content table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.9rem; }
+    #lab-content th { background: var(--navy); color: var(--white); padding: 0.6rem 1rem; text-align: left; }
+    #lab-content td { padding: 0.55rem 1rem; border-bottom: 1px solid var(--gray-border); }
+    #lab-content tr:nth-child(even) td { background: var(--gray-light); }
+    #lab-content strong { font-weight: 600; }
+    #lab-content hr { border: none; border-top: 2px solid var(--gray-border); margin: 2rem 0; }
+    #lab-content blockquote { border-left: 4px solid var(--navy); padding-left: 1rem; color: #555; margin: 1rem 0; }
+
+    /* ── Quiz section ── */
+    #quiz-section { margin-top: 2.5rem; border-top: 3px solid var(--navy); padding-top: 2rem; }
+    #quiz-section h2 { font-size: 1.4rem; color: var(--navy); margin-bottom: 1.5rem; }
+
+    .question-block {
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .question-block.is-correct  { border-color: var(--correct); }
+    .question-block.is-incorrect { border-color: var(--incorrect); }
+
+    .question-num { color: var(--navy); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .question-text { font-weight: 600; margin-bottom: 1rem; line-height: 1.5; }
+
+    /* Multiple choice */
+    .options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .option-btn {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.65rem 1rem;
+      border: 2px solid var(--gray-border); border-radius: 6px;
+      background: var(--white); cursor: pointer;
+      font-size: 0.95rem; text-align: left;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .option-btn:hover:not(:disabled) { border-color: var(--accent); background: #f0f6ff; }
+    .option-btn.selected  { border-color: var(--accent); background: #e8f0fe; }
+    .option-btn:disabled  { cursor: default; }
+    .option-btn.correct-ans   { border-color: var(--correct);   background: var(--correct-bg); }
+    .option-btn.incorrect-ans { border-color: var(--incorrect);  background: var(--incorrect-bg); }
+
+    /* True/False */
+    .tf-group { display: flex; gap: 0.75rem; }
+    .tf-btn {
+      flex: 1; padding: 0.65rem;
+      border: 2px solid var(--gray-border); border-radius: 6px;
+      background: var(--white); cursor: pointer;
+      font-size: 0.95rem; font-weight: 600;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: #f0f6ff; }
+    .tf-btn.selected  { border-color: var(--accent); background: #e8f0fe; }
+    .tf-btn:disabled  { cursor: default; }
+    .tf-btn.correct-ans   { border-color: var(--correct);   background: var(--correct-bg); }
+    .tf-btn.incorrect-ans { border-color: var(--incorrect);  background: var(--incorrect-bg); }
+
+    /* Short answer */
+    .short-answer-input {
+      width: 100%; padding: 0.6rem 0.9rem;
+      border: 2px solid var(--gray-border); border-radius: 6px;
+      font-size: 0.95rem; outline: none;
+      transition: border-color 0.15s;
+    }
+    .short-answer-input:focus   { border-color: var(--accent); }
+    .short-answer-input:disabled { background: var(--gray-light); cursor: default; }
+    .short-answer-input.correct-ans   { border-color: var(--correct);   background: var(--correct-bg); }
+    .short-answer-input.incorrect-ans { border-color: var(--incorrect);  background: var(--incorrect-bg); }
+
+    /* Per-question check row */
+    .check-row { display: flex; align-items: center; gap: 1rem; margin-top: 0.9rem; }
+
+    .check-btn {
+      padding: 0.45rem 1.1rem;
+      border: 2px solid var(--navy); border-radius: 6px;
+      background: var(--white); color: var(--navy);
+      font-size: 0.88rem; font-weight: 700; cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .check-btn:hover:not(:disabled) { background: var(--navy); color: var(--white); }
+    .check-btn:disabled { opacity: 0.35; cursor: default; }
+
+    /* Feedback */
+    .feedback { font-size: 0.88rem; font-weight: 700; display: none; }
+    .feedback.correct   { color: var(--correct);  display: block; }
+    .feedback.incorrect { color: var(--incorrect); display: block; }
+
+    /* Buttons */
+    .btn {
+      display: inline-block; padding: 0.7rem 1.5rem;
+      border: none; border-radius: 6px;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+    .btn-primary   { background: var(--navy);    color: var(--white); }
+    .btn-secondary { background: var(--accent);  color: var(--white); }
+    .btn-success   { background: var(--correct); color: var(--white); }
+
+    #start-quiz-btn { margin-top: 2rem; }
+
+    .quiz-actions {
+      display: flex; align-items: center; gap: 1rem;
+      margin-top: 1.5rem; flex-wrap: wrap;
+    }
+    #score-display { font-size: 0.95rem; font-weight: 600; color: #444; }
+
+    /* Loading */
+    #loading { padding: 3rem; text-align: center; color: #666; font-size: 1.1rem; }
+
+    @media (max-width: 700px) {
+      nav { display: none; }
+      main { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <img src="BYU_Capstone.png" alt="BYU Capstone" class="header-logo" />
+  </a>
+  <span id="lab-counter"></span>
+</header>
+
+<div class="layout">
+  <nav>
+    <ul id="nav-list"></ul>
+    <div class="nav-logo-wrap">
+      <img src="BYU_Capstone.png" alt="BYU Capstone" />
+    </div>
+  </nav>
+
+  <main>
+    <div id="loading">Loading lab...</div>
+    <div id="lab-content" style="display:none"></div>
+
+    <button id="start-quiz-btn" class="btn btn-primary" style="display:none">
+      Start Quiz →
+    </button>
+
+    <div id="quiz-section" style="display:none">
+      <h2>Lab Quiz</h2>
+      <div id="questions-container"></div>
+      <div class="quiz-actions">
+        <span id="score-display"></span>
+        <button id="reveal-btn" class="btn btn-secondary" style="display:none">Reveal Correct Answers</button>
+        <button id="next-lab-btn" class="btn btn-success" style="display:none">Next Lab →</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  let config = null;
+  let currentLabIndex = 0;
+  let questions = [];
+  let checkedCount = 0;
+  let correctCount = 0;
+  let revealed = false;
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  async function init() {
+    config = await fetchJSON('labs/config.json');
+    buildNav();
+    loadLab(0);
+  }
+
+  async function fetchJSON(url) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed to load ${url}`);
+    return res.json();
+  }
+
+  async function fetchText(url) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed to load ${url}`);
+    return res.text();
+  }
+
+  // ── Nav ───────────────────────────────────────────────────────────────────
+  function buildNav() {
+    const ul = document.getElementById('nav-list');
+    ul.innerHTML = config.labs.map((lab, i) =>
+      `<li><a href="#" data-index="${i}" id="nav-${i}">${lab.title}</a></li>`
+    ).join('');
+    ul.addEventListener('click', e => {
+      const a = e.target.closest('a[data-index]');
+      if (a) { e.preventDefault(); loadLab(parseInt(a.dataset.index)); }
+    });
+  }
+
+  function updateNav(index) {
+    document.querySelectorAll('#nav-list a').forEach(a => a.classList.remove('active'));
+    const active = document.getElementById(`nav-${index}`);
+    if (active) active.classList.add('active');
+    document.getElementById('lab-counter').textContent =
+      `Lab ${index + 1} of ${config.labs.length}`;
+  }
+
+  // ── Lab loading ───────────────────────────────────────────────────────────
+  async function loadLab(index) {
+    currentLabIndex = index;
+    checkedCount = 0;
+    correctCount = 0;
+    revealed = false;
+    questions = [];
+
+    const lab = config.labs[index];
+    const loading = document.getElementById('loading');
+    const content = document.getElementById('lab-content');
+    const quizBtn = document.getElementById('start-quiz-btn');
+    const quizSec = document.getElementById('quiz-section');
+
+    loading.style.display = 'block';
+    content.style.display = 'none';
+    quizBtn.style.display = 'none';
+    quizSec.style.display = 'none';
+    document.getElementById('score-display').textContent = '';
+    document.getElementById('reveal-btn').style.display = 'none';
+    document.getElementById('next-lab-btn').style.display = 'none';
+    updateNav(index);
+
+    try {
+      const [md, qs] = await Promise.all([
+        fetchText(`labs/${lab.id}/content.md`),
+        fetchJSON(`labs/${lab.id}/questions.json`)
+      ]);
+      content.innerHTML = marked.parse(md);
+      questions = qs;
+      loading.style.display = 'none';
+      content.style.display = 'block';
+      quizBtn.style.display = 'inline-block';
+    } catch (err) {
+      loading.textContent = `Error loading lab: ${err.message}`;
+    }
+  }
+
+  // ── Start quiz ────────────────────────────────────────────────────────────
+  document.getElementById('start-quiz-btn').addEventListener('click', () => {
+    document.getElementById('start-quiz-btn').style.display = 'none';
+    buildQuiz();
+    document.getElementById('quiz-section').style.display = 'block';
+    document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  function buildQuiz() {
+    const container = document.getElementById('questions-container');
+    container.innerHTML = '';
+    checkedCount = 0;
+    correctCount = 0;
+    revealed = false;
+    document.getElementById('score-display').textContent = '';
+    document.getElementById('reveal-btn').style.display = 'none';
+    document.getElementById('next-lab-btn').style.display = 'none';
+
+    questions.forEach((q, i) => {
+      const block = document.createElement('div');
+      block.className = 'question-block';
+      block.dataset.index = i;
+      block.dataset.checked = 'false';
+
+      const num = document.createElement('div');
+      num.className = 'question-num';
+      num.textContent = `Question ${i + 1}`;
+
+      const text = document.createElement('div');
+      text.className = 'question-text';
+      text.textContent = q.question;
+
+      const input = buildInput(q, i);
+
+      const checkRow = document.createElement('div');
+      checkRow.className = 'check-row';
+
+      const checkBtn = document.createElement('button');
+      checkBtn.className = 'check-btn';
+      checkBtn.textContent = 'Check';
+      checkBtn.addEventListener('click', () => checkQuestion(i));
+
+      const feedback = document.createElement('div');
+      feedback.className = 'feedback';
+
+      checkRow.appendChild(checkBtn);
+      checkRow.appendChild(feedback);
+
+      block.appendChild(num);
+      block.appendChild(text);
+      block.appendChild(input);
+      block.appendChild(checkRow);
+      container.appendChild(block);
+    });
+  }
+
+  function buildInput(q, i) {
+    if (q.type === 'multiple-choice') return buildMC(q, i);
+    if (q.type === 'true-false')      return buildTF(q, i);
+    if (q.type === 'short-answer')    return buildSA(q, i);
+    return document.createElement('div');
+  }
+
+  function buildMC(q, i) {
+    const wrap = document.createElement('div');
+    wrap.className = 'options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.dataset.value = oi;
+      btn.textContent = opt;
+      btn.addEventListener('click', () => {
+        if (getBlock(i).dataset.checked === 'true') return;
+        wrap.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+      wrap.appendChild(btn);
+    });
+    return wrap;
+  }
+
+  function buildTF(q, i) {
+    const wrap = document.createElement('div');
+    wrap.className = 'tf-group';
+    ['True', 'False'].forEach(label => {
+      const btn = document.createElement('button');
+      btn.className = 'tf-btn';
+      btn.dataset.value = label.toLowerCase();
+      btn.textContent = label;
+      btn.addEventListener('click', () => {
+        if (getBlock(i).dataset.checked === 'true') return;
+        wrap.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+      wrap.appendChild(btn);
+    });
+    return wrap;
+  }
+
+  function buildSA(q, i) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'short-answer-input';
+    input.placeholder = 'Type your answer…';
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkQuestion(i);
+    });
+    return input;
+  }
+
+  function getBlock(i) {
+    return document.querySelector(`.question-block[data-index="${i}"]`);
+  }
+
+  // ── Check a single question ───────────────────────────────────────────────
+  function checkQuestion(i) {
+    const q = questions[i];
+    const block = getBlock(i);
+    if (block.dataset.checked === 'true') return;
+
+    const feedback = block.querySelector('.feedback');
+    const checkBtn = block.querySelector('.check-btn');
+    let isCorrect = false;
+
+    // Lock the input
+    if (q.type === 'multiple-choice') {
+      block.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+      const sel = block.querySelector('.option-btn.selected');
+      if (sel) isCorrect = parseInt(sel.dataset.value) === q.correct;
+
+    } else if (q.type === 'true-false') {
+      block.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+      const sel = block.querySelector('.tf-btn.selected');
+      if (sel) isCorrect = sel.dataset.value === (q.correct ? 'true' : 'false');
+
+    } else if (q.type === 'short-answer') {
+      const input = block.querySelector('.short-answer-input');
+      input.disabled = true;
+      const val = (input.value || '').trim().toLowerCase();
+      isCorrect = val === q.correct.toString().toLowerCase();
+    }
+
+    // Show only correct / incorrect — no answer reveal yet
+    feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+    feedback.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+
+    block.dataset.checked = 'true';
+    block.dataset.correct = isCorrect ? 'true' : 'false';
+    block.classList.add(isCorrect ? 'is-correct' : 'is-incorrect');
+    checkBtn.disabled = true;
+
+    if (isCorrect) correctCount++;
+    checkedCount++;
+
+    // All questions checked → show score + reveal button
+    if (checkedCount === questions.length) {
+      const total = questions.length;
+      const pct = Math.round((correctCount / total) * 100);
+      document.getElementById('score-display').textContent =
+        `Score: ${correctCount}/${total} (${pct}%)`;
+      document.getElementById('reveal-btn').style.display = 'inline-block';
+    }
+  }
+
+  // ── Reveal correct answers ────────────────────────────────────────────────
+  document.getElementById('reveal-btn').addEventListener('click', () => {
+    revealed = true;
+    document.getElementById('reveal-btn').style.display = 'none';
+
+    questions.forEach((q, i) => {
+      const block = getBlock(i);
+      const feedback = block.querySelector('.feedback');
+      const wasCorrect = block.dataset.correct === 'true';
+
+      if (q.type === 'multiple-choice') {
+        const sel = block.querySelector('.option-btn.selected');
+        if (sel && !wasCorrect) sel.classList.add('incorrect-ans');
+        block.querySelectorAll('.option-btn')[q.correct].classList.add('correct-ans');
+
+      } else if (q.type === 'true-false') {
+        const correctVal = q.correct ? 'true' : 'false';
+        const sel = block.querySelector('.tf-btn.selected');
+        if (sel && !wasCorrect) sel.classList.add('incorrect-ans');
+        block.querySelector(`.tf-btn[data-value="${correctVal}"]`).classList.add('correct-ans');
+
+      } else if (q.type === 'short-answer') {
+        const input = block.querySelector('.short-answer-input');
+        input.classList.add(wasCorrect ? 'correct-ans' : 'incorrect-ans');
+        if (!wasCorrect) {
+          feedback.className = 'feedback incorrect';
+          feedback.textContent = `✗ Incorrect — Correct answer: ${q.correct}`;
+        }
+      }
+    });
+
+    // Show next lab button
+    const nextBtn = document.getElementById('next-lab-btn');
+    const isLast = currentLabIndex === config.labs.length - 1;
+    nextBtn.textContent = isLast ? 'Back to First Lab ↺' : 'Next Lab →';
+    nextBtn.style.display = 'inline-block';
+
+    const navItem = document.getElementById(`nav-${currentLabIndex}`);
+    if (navItem) navItem.classList.add('completed');
+  });
+
+  // ── Next lab ──────────────────────────────────────────────────────────────
+  document.getElementById('next-lab-btn').addEventListener('click', () => {
+    const next = (currentLabIndex + 1) % config.labs.length;
+    loadLab(next);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ── Go ────────────────────────────────────────────────────────────────────
+  init().catch(err => {
+    document.getElementById('loading').textContent = `Failed to initialize: ${err.message}`;
+  });
+</script>
+</body>
+</html>

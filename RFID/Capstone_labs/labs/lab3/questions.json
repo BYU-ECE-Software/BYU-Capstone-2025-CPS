@@ -1,0 +1,61 @@
+[
+  {
+    "type": "multiple-choice",
+    "question": "Which of the following is identified as a common risk indicator in a badge environment?",
+    "options": [
+      "Deployment of MIFARE DESFire smart cards",
+      "Heavy reliance on 125 kHz legacy proximity cards",
+      "Using HF-only readers at all entry points",
+      "Maintaining an active card revocation process"
+    ],
+    "correct": 1
+  },
+  {
+    "type": "true-false",
+    "question": "Dual-technology cards that continue to use legacy LF functionality in production are considered a security risk.",
+    "correct": true
+  },
+  {
+    "type": "multiple-choice",
+    "question": "What is a recommended long-term improvement for an environment relying on legacy badge technology?",
+    "options": [
+      "Add more LF readers to improve coverage",
+      "Disable all card access and use PIN-only entry",
+      "Standardize on stronger HF smart-card technologies",
+      "Continue current deployment until cards physically fail"
+    ],
+    "correct": 2
+  },
+  {
+    "type": "short-answer",
+    "question": "What is the first section of the risk assessment memo deliverable?",
+    "correct": "Current State"
+  },
+  {
+    "type": "true-false",
+    "question": "A lack of a documented credential lifecycle and revocation process is considered a risk indicator.",
+    "correct": true
+  },
+  {
+    "type": "multiple-choice",
+    "question": "Which of the following best describes why dual-tech reader support can be a risk during migration?",
+    "options": [
+      "Dual-tech readers are more expensive to maintain",
+      "Legacy LF support may remain active and exploitable even after migration begins",
+      "HF cards cannot be read by dual-tech readers",
+      "Dual-tech readers require firmware updates every month"
+    ],
+    "correct": 1
+  },
+  {
+    "type": "multiple-choice",
+    "question": "When building a credential inventory for a risk assessment, which of the following should be documented?",
+    "options": [
+      "Card color and lanyard style",
+      "Cardholder's home address",
+      "LF/HF/dual-tech type, likely card family, and whether it appears legacy or modern",
+      "The date the cardholder was hired"
+    ],
+    "correct": 2
+  }
+]

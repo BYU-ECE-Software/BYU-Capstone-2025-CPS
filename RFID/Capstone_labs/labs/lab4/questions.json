@@ -1,0 +1,56 @@
+[
+  {
+    "type": "multiple-choice",
+    "question": "Which naming format follows the lab's recommended convention for a low-frequency lab card?",
+    "options": ["CARD-001-LF", "LAB-LF-001", "TEST_LF_1", "lf-card-001"],
+    "correct": 1
+  },
+  {
+    "type": "true-false",
+    "question": "Lab cards and production employee badges can be stored together as long as both are clearly labeled.",
+    "correct": false
+  },
+  {
+    "type": "multiple-choice",
+    "question": "When a lab card is retired, what is the correct course of action?",
+    "options": [
+      "Reissue it to the next student",
+      "Return it to the vendor for a refund",
+      "Mark it as retired in the inventory, remove it from circulation, and destroy or store per policy",
+      "Leave it in the storage cabinet with active cards"
+    ],
+    "correct": 2
+  },
+  {
+    "type": "multiple-choice",
+    "question": "Which of the following should NOT be stored with lab training cards?",
+    "options": [
+      "Retired lab cards awaiting destruction",
+      "Duplicate lab cards for backup use",
+      "Vendor-issued production credentials",
+      "Cards labeled LAB-DUAL-001"
+    ],
+    "correct": 2
+  },
+  {
+    "type": "true-false",
+    "question": "New lab cards should be logged in the inventory when they are received.",
+    "correct": true
+  },
+  {
+    "type": "short-answer",
+    "question": "What team or workflow should manage changes to live production credentials?",
+    "correct": "physical security"
+  },
+  {
+    "type": "multiple-choice",
+    "question": "What information should always be tracked for each card in an inventory log?",
+    "options": [
+      "Card label, frequency, technology family, status, and storage location",
+      "Cardholder name, department, and hire date",
+      "Card color, lanyard length, and reader compatibility",
+      "Purchase price, vendor name, and warranty expiration"
+    ],
+    "correct": 0
+  }
+]

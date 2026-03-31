@@ -1,0 +1,56 @@
+[
+  {
+    "type": "multiple-choice",
+    "question": "What does a facility code typically identify in a badge system?",
+    "options": [
+      "The individual cardholder's name",
+      "A specific site, organization, or system grouping",
+      "The card's operating frequency",
+      "The encryption algorithm used"
+    ],
+    "correct": 1
+  },
+  {
+    "type": "true-false",
+    "question": "Hexadecimal is a base-16 number system.",
+    "correct": true
+  },
+  {
+    "type": "multiple-choice",
+    "question": "Which command would you use to search for an HF card's technology family?",
+    "options": ["lf search", "hf tune", "hf search", "pm3 read"],
+    "correct": 2
+  },
+  {
+    "type": "short-answer",
+    "question": "What base number system is hexadecimal?",
+    "correct": "16"
+  },
+  {
+    "type": "true-false",
+    "question": "It is acceptable to modify a credential while documenting its data to make the output easier to read.",
+    "correct": false
+  },
+  {
+    "type": "multiple-choice",
+    "question": "What is the difference between a facility code and a card number?",
+    "options": [
+      "They are the same thing displayed differently",
+      "The facility code identifies the site/group; the card number identifies the individual credential",
+      "The card number identifies the site; the facility code identifies the individual",
+      "Neither is used in modern badge systems"
+    ],
+    "correct": 1
+  },
+  {
+    "type": "multiple-choice",
+    "question": "Why do badge tools often display raw data in hexadecimal?",
+    "options": [
+      "Hex is required by law for badge documentation",
+      "Hex output is encrypted for security",
+      "Hex makes binary data easier to read and record",
+      "Proxmark only supports hex output"
+    ],
+    "correct": 2
+  }
+]

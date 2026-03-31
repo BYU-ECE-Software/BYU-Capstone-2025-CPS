@@ -1,0 +1,46 @@
+[
+  {
+    "type": "multiple-choice",
+    "question": "What is the common operating frequency for Low Frequency (LF) RFID cards?",
+    "options": ["13.56 MHz", "125 kHz", "2.4 GHz", "900 MHz"],
+    "correct": 1
+  },
+  {
+    "type": "true-false",
+    "question": "High Frequency (HF) RFID cards typically operate at 125 kHz.",
+    "correct": false
+  },
+  {
+    "type": "multiple-choice",
+    "question": "Which Proxmark command do you run to test whether a card responds on the LF antenna?",
+    "options": ["lf search", "hf tune", "lf tune", "pm3 scan"],
+    "correct": 2
+  },
+  {
+    "type": "multiple-choice",
+    "question": "After confirming a card responds at HF, which command attempts to identify its technology family?",
+    "options": ["hf tune", "lf search", "pm3", "hf search"],
+    "correct": 3
+  },
+  {
+    "type": "short-answer",
+    "question": "What command starts the Proxmark client?",
+    "correct": "pm3"
+  },
+  {
+    "type": "true-false",
+    "question": "LF proximity cards are generally considered more complex and secure than modern HF smart cards.",
+    "correct": false
+  },
+  {
+    "type": "multiple-choice",
+    "question": "Which of the following is a typical use case for HF RFID technology?",
+    "options": [
+      "Legacy building entry systems from the 1990s",
+      "Simple proximity badge deployments",
+      "Modern enterprise badges and NFC-based systems",
+      "Animal tracking chips"
+    ],
+    "correct": 2
+  }
+]
